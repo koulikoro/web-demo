@@ -1,6 +1,8 @@
 package com.semeureka.mvc.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,13 +15,14 @@ public class UserDaoImpl implements UserDao {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public User findById(Integer id) {
-		return (User) sessionFactory.getCurrentSession().get(User.class, id);
-	}
-
-	@Override
 	public void save(User user) {
 		sessionFactory.getCurrentSession().save(user);
 	}
 
+	@Override
+	public User findByUsername(String username) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(User.class);
+		criteria.add(Restrictions.eq("username", username));
+		return (User) criteria.uniqueResult();
+	}
 }
