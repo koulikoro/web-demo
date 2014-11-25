@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="tt" %>
+<tt:frame>
+
+</tt:frame>
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
@@ -18,7 +22,7 @@
 	<div class="container">
 		<h1 class="page-header">Loading...</h1>
 	</div>
-	<script src="${ctx}/resources/jquery/1.11.1/jquery.min.js"></script>
+	<script src="${ctx}/resources/jquery/1.11.1/jquery.js"></script>
 	<script src="${ctx}/resources/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
