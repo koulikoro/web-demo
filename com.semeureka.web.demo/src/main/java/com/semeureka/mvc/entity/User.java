@@ -22,8 +22,6 @@ public class User {
 	private String username;
 	@Column(name = "user_password")
 	private String password;
-	@Column(name = "user_password_salt")
-	private String salt;
 	@Column(name = "user_locked")
 	private boolean locked;
 	@ManyToOne
@@ -55,14 +53,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getSalt() {
-		return salt;
-	}
-
-	public void setSalt(String salt) {
-		this.salt = salt;
 	}
 
 	public boolean isLocked() {

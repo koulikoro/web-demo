@@ -49,4 +49,13 @@
 			<bean class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
 		</property>
 	</bean>
+	<bean id="userRealm" class="com.semeureka.mvc.misc.UserRealm">
+		<property name="userService" ref="userServiceImpl" />
+		<property name="credentialsMatcher">
+			<bean class="org.apache.shiro.authc.credential.PasswordMatcher">
+				<property name="passwordService" ref="passwordService" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="passwordService" class="org.apache.shiro.authc.credential.DefaultPasswordService" />
 </beans>
