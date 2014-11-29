@@ -15,20 +15,43 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/user/login")
-	public String login() {
-		return "user/login";
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	public String toCreate() {
+		return "user/create";
 	}
 
-	@RequestMapping(value = "/user/welcome")
-	public String welcome() {
-		return "user/welcome";
+	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	public String create(User user) {
+		userService.save(user);
+		return "redirect:/users";
 	}
 
-	@RequestMapping(value = "/user/edit/{username}", method = RequestMethod.GET)
-	public String edit(@PathVariable String username, Model model) {
-		User user = userService.findByUsername(username);
-		model.addAttribute("user", user);
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public String read(@PathVariable Integer id, Model model) {
+		// TODO find the user.
 		return "user/edit";
+	}
+
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.POST)
+	public String update(@PathVariable Integer id, Model model) {
+		// TODO update the user.
+		return "redirect:/users";
+	}
+
+	@RequestMapping(value = "/user/{id}/delete")
+	public String delete(@PathVariable Integer id) {
+		userService.deleteById(id);
+		return "redirect:/users";
+	}
+
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	public String manage(Model model) {
+		model.addAttribute("users", userService.findAll());
+		return "user/manage";
+	}
+
+	@RequestMapping(value = "/user/login")
+	public String toLogin() {
+		return "user/login";
 	}
 }

@@ -7,6 +7,7 @@
 	<context:component-scan base-package="com.semeureka">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	<tx:annotation-driven />
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
@@ -24,18 +25,21 @@
 			</props>
 		</property>
 	</bean>
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/user/login" />
-		<property name="successUrl" value="/user/welcome" />
+		<property name="successUrl" value="/users" />
 		<property name="unauthorizedUrl" value="/error" />
 		<property name="filterChainDefinitions">
 			<value>
 				/resources/** = anon
-				/user/logout = logout
-				/user/welcome = user
-				/** = authc
+				/user/login = authc
+				/** = user
 			</value>
 		</property>
 	</bean>

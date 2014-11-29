@@ -1,5 +1,7 @@
 package com.semeureka.mvc.misc;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -8,8 +10,12 @@ import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.RandomNumberGenerator;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -25,6 +31,22 @@ import com.semeureka.mvc.service.UserService;
 public class UserRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService;
+
+	@PostConstruct
+	public void initHashedCredentialsMatcher() {
+		HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher(Sha256Hash.ALGORITHM_NAME);
+		credentialsMatcher.setStoredCredentialsHexEncoded(false);
+		credentialsMatcher.setHashIterations(1024);
+		setCredentialsMatcher(credentialsMatcher);
+	}
+
+	public void hashedPassword(User user) {
+		RandomNumberGenerator numberGenerator = new SecureRandomNumberGenerator();
+		String salt = numberGenerator.nextBytes().toBase64();
+		String hashedPassword = new Sha256Hash(user.getPassword(), salt, 1024).toBase64();
+		user.setPassword(hashedPassword);
+		user.setSalt(salt);
+	}
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {

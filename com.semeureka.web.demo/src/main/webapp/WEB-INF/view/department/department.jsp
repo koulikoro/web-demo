@@ -2,5 +2,6 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="sh"%>
 <tt:frame>
-	<h1 class="page-header">Edit...</h1>
+	<h1 class="page-header">Department...</h1>
+	
 </tt:frame>
