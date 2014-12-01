@@ -3,7 +3,7 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="sh"%>
 <tt:frame>
 	<h1 class="page-header">Create...</h1>
-	<form class="form-horizontal" action="${ctx}/user" method="post">
+	<form class="form-horizontal" action="${ctx}/user/create" method="post">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Username</label>
 			<div class="col-sm-10">

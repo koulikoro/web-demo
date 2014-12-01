@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +19,9 @@ public class Role {
 	private Integer id;
 	@Column(name = "role_name")
 	private String name;
-	@OneToMany
+	@Column(name = "role_description")
+	private String description;
+	@ManyToMany
 	@JoinTable(name = "t_role_permission", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
 	private Set<Permission> permissions;
 
@@ -37,6 +39,14 @@ public class Role {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Set<Permission> getPermissions() {

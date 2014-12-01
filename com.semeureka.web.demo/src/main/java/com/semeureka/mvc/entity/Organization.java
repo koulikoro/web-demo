@@ -9,16 +9,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "t_department")
-public class Department {
+@Table(name = "t_organization")
+public class Organization {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@Column(name = "department_name")
+	@Column(name = "organization_name")
 	private String name;
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
-	private Department parent;
+	private Organization parent;
 
 	public Integer getId() {
 		return id;
@@ -34,5 +34,13 @@ public class Department {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Organization getParent() {
+		return parent;
+	}
+
+	public void setParent(Organization parent) {
+		this.parent = parent;
 	}
 }

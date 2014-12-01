@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -25,9 +25,9 @@ public class User {
 	@Column(name = "user_locked")
 	private boolean locked;
 	@ManyToOne
-	@JoinColumn(name = "department_id")
-	private Department department;
-	@OneToMany
+	@JoinColumn(name = "organization_id")
+	private Organization organization;
+	@ManyToMany
 	@JoinTable(name = "t_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
@@ -63,12 +63,12 @@ public class User {
 		this.locked = locked;
 	}
 
-	public Department getDepartment() {
-		return department;
+	public Organization getOrganization() {
+		return organization;
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
 	}
 
 	public Set<Role> getRoles() {

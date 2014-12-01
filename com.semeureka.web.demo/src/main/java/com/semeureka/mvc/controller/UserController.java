@@ -11,47 +11,48 @@ import com.semeureka.mvc.entity.User;
 import com.semeureka.mvc.service.UserService;
 
 @Controller
+@RequestMapping(value = "/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String toCreate() {
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String create() {
 		return "user/create";
 	}
 
-	@RequestMapping(value = "/user", method = RequestMethod.POST)
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(User user) {
 		userService.save(user);
-		return "redirect:/users";
+		return "redirect:/user";
 	}
 
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public String read(@PathVariable Integer id, Model model) {
-		// TODO find the user.
-		return "user/edit";
-	}
-
-	@RequestMapping(value = "/user/{id}", method = RequestMethod.POST)
-	public String update(@PathVariable Integer id, Model model) {
-		// TODO update the user.
-		return "redirect:/users";
-	}
-
-	@RequestMapping(value = "/user/{id}/delete")
+	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		userService.deleteById(id);
-		return "redirect:/users";
+		return "redirect:/user";
 	}
 
-	@RequestMapping(value = "/users", method = RequestMethod.GET)
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public String update(@PathVariable Integer id, Model model) {
+		// TODO find the user.
+		return "user/update";
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	public String update(User user, @PathVariable Integer id, Model model) {
+		// TODO update the user.
+		return "redirect:/user";
+	}
+
+	@RequestMapping(value = "")
 	public String manage(Model model) {
 		model.addAttribute("users", userService.findAll());
 		return "user/manage";
 	}
 
-	@RequestMapping(value = "/user/login")
-	public String toLogin() {
+	@RequestMapping(value = "/login")
+	public String login() {
 		return "user/login";
 	}
 }

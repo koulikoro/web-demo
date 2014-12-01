@@ -3,10 +3,10 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
-	<h1 class="page-header">用户信息</h1>
-	<form class="form-inline form-group clearfix">
-		<shiro:hasPermission name="user:create">
-			<a href="${ctx}/user/create" class="btn btn-default btn-sm">添加</a>
+	<h1 class="page-header">角色信息</h1>
+	<form class="form-inline form-group clearfix" action="${ctx}/role">
+		<shiro:hasPermission name="role:create">
+			<a href="${ctx}/role/create" class="btn btn-default btn-sm">添加</a>
 		</shiro:hasPermission>
 		<div class="pull-right">
 			<div class="form-group">
@@ -18,20 +18,17 @@
 	<table class="table table-condensed table-striped table-bordered">
 		<tr>
 			<th>序号</th>
-			<th>所属部门</th>
-			<th>用户账号</th>
+			<th>角色名称</th>
+			<th>角色描述</th>
 			<th></th>
 		</tr>
-		<c:forEach items="${users}" var="user" varStatus="status">
+		<c:forEach items="${roles}" var="role" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
-				<td>${user.organization.name}</td>
-				<td>${user.username}<c:if test="${user.locked}">
-						<span class="glyphicon glyphicon-lock" title="已锁定"></span>
-					</c:if></td>
-				<td><a href="${ctx}/user/delete/${user.id}">删除</a> <a href="${ctx}/user/update/${user.id}">修改</a></td>
+				<td>${role.name}</td>
+				<td>${role.description}</td>
+				<td><a href="${ctx}/role/delete/${role.id}">删除</a> <a href="${ctx}/role/update/${role.id}">修改</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-
 </tt:frame>

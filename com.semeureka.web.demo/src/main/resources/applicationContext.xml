@@ -32,9 +32,13 @@
 	<bean id="passwordService" class="org.apache.shiro.authc.credential.DefaultPasswordService" />
 	<bean id="realm" class="org.apache.shiro.realm.jdbc.JdbcRealm">
 		<property name="dataSource" ref="dataSource" />
+		<property name="authorizationCachingEnabled" value="false" />
 		<property name="authenticationQuery" value="select user_password from t_user where user_name = ?" />
-		<property name="userRolesQuery" value="select r.role_name from t_user u, t_user_role ur, t_role r where u.id = ur.user_id and ur.role_id = r.id and user_name = ?" />
-		<property name="permissionsQuery" value="select p.permission_name from t_role r, t_role_permission rp, t_permission p where r.id = rp.role_id and p.id = rp.permission_id and r.role_name = ?" />
+		<property name="userRolesQuery"
+			value="select r.role_name from t_user u, t_user_role ur, t_role r where u.id = ur.user_id and ur.role_id = r.id and user_name = ?" />
+		<property name="permissionsQuery"
+			value="select p.permission_name from t_role r, t_role_permission rp, t_permission p where r.id = rp.role_id and p.id = rp.permission_id and r.role_name = ?" />
+		<property name="permissionsLookupEnabled" value="true" />
 		<property name="credentialsMatcher">
 			<bean class="org.apache.shiro.authc.credential.PasswordMatcher">
 				<property name="passwordService" ref="passwordService" />
@@ -43,9 +47,6 @@
 	</bean>
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="realm" />
-		<property name="cacheManager">
-			<bean class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
-		</property>
 	</bean>
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
@@ -56,8 +57,12 @@
 			<value>
 				/resources/** = anon
 				/user/login = authc
+				/user/logout = logout
+				/user/create = authc, perms[user:create]
+				/user/delete/** = authc, perms[user:delete]
 				/** = user
 			</value>
 		</property>
 	</bean>
+
 </beans>
