@@ -10,14 +10,14 @@
 		</shiro:hasPermission>
 		<div class="pull-right">
 			<div class="form-group">
-				<input type="password" class="form-control input-sm" placeholder="查询条件">
+				<input type="text" class="form-control input-sm" placeholder="查询条件">
 			</div>
 			<button type="submit" class="btn btn-default btn-sm">查询</button>
 		</div>
 	</form>
-	<table class="table table-condensed table-striped table-bordered">
+	<table class="table table-condensed table-bordered">
 		<tr>
-			<th>序号</th>
+			<th class="col-no">序号</th>
 			<th>所属部门</th>
 			<th>用户账号</th>
 			<th></th>
@@ -26,9 +26,7 @@
 			<tr>
 				<td>${status.count}</td>
 				<td>${user.organization.name}</td>
-				<td>${user.username}<c:if test="${user.locked}">
-						<span class="glyphicon glyphicon-lock" title="已锁定"></span>
-					</c:if></td>
+				<td>${user.username}</td>
 				<td><a href="${ctx}/user/delete/${user.id}">删除</a> <a href="${ctx}/user/update/${user.id}">修改</a></td>
 			</tr>
 		</c:forEach>

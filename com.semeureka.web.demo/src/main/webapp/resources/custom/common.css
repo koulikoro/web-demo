@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.col-no {
+	width: 50px;
+}
+
+.form-group-sm .help-block {
+	margin-bottom: -10px;
+	font-size: 12px;
+}

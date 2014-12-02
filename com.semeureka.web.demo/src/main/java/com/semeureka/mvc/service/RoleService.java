@@ -10,4 +10,6 @@ public interface RoleService {
 	void deleteById(Integer id);
 
 	List<Role> findAll();
+
+	Role findById(Integer id);
 }

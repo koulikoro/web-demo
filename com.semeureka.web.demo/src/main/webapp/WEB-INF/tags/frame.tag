@@ -10,12 +10,28 @@
 <title>${title}</title>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="session" />
 <link href="${ctx}/resources/bootstrap/3.3.1/css/bootstrap${cookie.theme.value}.css" rel="stylesheet">
+<link href="${ctx}/resources/custom/common.css" rel="stylesheet">
 <!--[if lt IE 9]>
 	<script src="${ctx}/resources/html5shiv/3.7.2/html5shiv.js"></script>
 	<script src="${ctx}/resources/respond/1.4.2/respond.js"></script>
 <![endif]-->
 <script src="${ctx}/resources/jquery/1.11.1/jquery.js"></script>
 <script src="${ctx}/resources/bootstrap/3.3.1/js/bootstrap.js"></script>
+<script src="${ctx}/resources/jquery.validate/1.13.1/jquery.validate.js"></script>
+<script src="${ctx}/resources/jquery.validate/1.13.1/additional-methods.js"></script>
+<script src="${ctx}/resources/jquery.validate/1.13.1/messages_zh.js"></script>
+<script type="text/javascript">
+	jQuery.validator.setDefaults({
+		errorClass : 'help-block',
+		errorElement : 'p',
+		highlight : function(element, errorClass, validClass) {
+			$(element).closest('.form-group').addClass('has-error');
+		},
+		unhighlight : function(element, errorClass, validClass) {
+			$(element).closest('.form-group').removeClass('has-error');
+		}
+	});
+</script>
 </head>
 <body>
 	<div class="container">

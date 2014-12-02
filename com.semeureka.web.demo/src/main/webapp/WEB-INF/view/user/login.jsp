@@ -19,7 +19,7 @@
 		<div class="form-group">
 			<div class="col-xs-offset-2 col-xs-10">
 				<div class="checkbox">
-					<label><input name="rememberMe" type="checkbox" value=""> 记住我的密码 </label>
+					<label><input name="rememberMe" type="checkbox"> 记住我的密码 </label>
 				</div>
 			</div>
 		</div>

@@ -10,14 +10,14 @@
 		</shiro:hasPermission>
 		<div class="pull-right">
 			<div class="form-group">
-				<input type="password" class="form-control input-sm" placeholder="查询条件">
+				<input type="text" class="form-control input-sm" placeholder="查询条件">
 			</div>
 			<button type="submit" class="btn btn-default btn-sm">查询</button>
 		</div>
 	</form>
 	<table class="table table-condensed table-striped table-bordered">
 		<tr>
-			<th>序号</th>
+			<th class="col-no">序号</th>
 			<th>角色名称</th>
 			<th>角色描述</th>
 			<th></th>
