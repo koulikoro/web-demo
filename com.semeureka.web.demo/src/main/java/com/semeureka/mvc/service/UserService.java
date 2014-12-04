@@ -7,9 +7,11 @@ import com.semeureka.mvc.entity.User;
 public interface UserService {
 	void save(User user);
 
+	void deleteById(Integer id);
+
 	User findByUsername(String username);
 
-	List<User> findAll();
+	User findById(Integer id);
 
-	void deleteById(Integer id);
+	List<User> findAll();
 }

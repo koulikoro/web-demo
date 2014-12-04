@@ -46,6 +46,19 @@ public class RoleController {
 		return "redirect:/role";
 	}
 
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public String update(@PathVariable Integer id, Model model) {
+		model.addAttribute("role", roleService.findById(id));
+		model.addAttribute("permissions", permissionService.findAll());
+		return "role/update";
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	public String update(Role role, @PathVariable Integer id, Model model) {
+		// TODO save the role
+		return "redirect:/role";
+	}
+
 	@RequestMapping(value = "")
 	public String manage(Model model) {
 		model.addAttribute("roles", roleService.findAll());

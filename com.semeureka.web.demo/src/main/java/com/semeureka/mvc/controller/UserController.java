@@ -53,13 +53,15 @@ public class UserController {
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
-		// TODO find the user.
+		model.addAttribute("user", userService.findById(id));
+		model.addAttribute("roles", roleService.findAll());
+		model.addAttribute("organizations", organizationService.findAll());
 		return "user/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String update(User user, @PathVariable Integer id, Model model) {
-		// TODO update the user.
+		userService.save(user);
 		return "redirect:/user";
 	}
 

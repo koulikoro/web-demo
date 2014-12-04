@@ -3,17 +3,17 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="sh"%>
 <tt:frame>
 	<h1 class="page-header">添加角色</h1>
-	<form class="form-horizontal" action="${ctx}/role/create" method="post">
+	<form id="role-create" class="form-horizontal" action="${ctx}/role/create" method="post">
 		<div class="form-group">
 			<label class="col-sm-2 control-label">角色名称</label>
 			<div class="col-sm-10">
-				<input name="name" type="text" class="form-control" placeholder="角色名称">
+				<input name="name" type="text" class="form-control" required pattern="[\w]{6,30}|[\u4e00-\u9fa5]{2,15}">
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">角色描述</label>
 			<div class="col-sm-10">
-				<input name="description" type="text" class="form-control" placeholder="角色描述">
+				<textarea name="description" rows="3" class="form-control" required pattern=".{6,255}"></textarea>
 			</div>
 		</div>
 		<div class="form-group">
@@ -52,4 +52,7 @@
 			</div>
 		</div>
 	</form>
+	<script type="text/javascript">
+		$('#role-create').validate();
+	</script>
 </tt:frame>

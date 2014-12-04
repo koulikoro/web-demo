@@ -8,25 +8,27 @@
 		<div class="form-group form-group-sm">
 			<label class="col-sm-2 control-label">用户账号</label>
 			<div class="col-sm-10">
-				<input name="username" type="text" class="form-control" placeholder="用户账号" required pattern="\w{6,31}">
+				<input name="username" type="text" class="form-control" placeholder="用户账号" required
+					pattern="[\w]{6,30}|[\u4e00-\u9fa5]{2,15}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
 			<label class="col-sm-2 control-label">用户密码</label>
 			<div class="col-sm-10">
-				<input name="password" type="password" class="form-control" placeholder="用户密码" required pattern="\w{6,31}">
+				<input name="password" type="password" class="form-control" placeholder="用户密码" required pattern=".{6,30}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
 			<label class="col-sm-2 control-label">确认密码</label>
 			<div class="col-sm-10">
-				<input name="password2" type="password" class="form-control" placeholder="确认密码" required pattern="\w{6,31}">
+				<input name="password2" type="password" class="form-control" placeholder="确认密码" required pattern=".{6,30}"
+					equalTo="[name='password']">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
 			<label class="col-sm-2 control-label">所属机构</label>
 			<div class="col-sm-10">
-				<select name="organization.id" class="form-control">
+				<select name="organization.id" class="form-control" required>
 					<option value=""></option>
 					<c:forEach items="${organizations}" var="organization">
 						<option value="${organization.id}">${organization.name}</option>
@@ -37,10 +39,12 @@
 		<div class="form-group form-group-sm">
 			<label class="col-sm-2 control-label">用户角色</label>
 			<div class="col-sm-10">
-				<c:forEach items="${roles}" var="role">
-					<label class="checkbox-inline"> <input name="roleIds" type="checkbox" value="${role.id}">${role.name}
-					</label>
-				</c:forEach>
+				<fieldset>
+					<c:forEach items="${roles}" var="role">
+						<label class="checkbox-inline"><input name="roleIds" type="checkbox" value="${role.id}" required
+							minlength="1">${role.name}</label>
+					</c:forEach>
+				</fieldset>
 			</div>
 		</div>
 		<div class="form-group form-group-sm">

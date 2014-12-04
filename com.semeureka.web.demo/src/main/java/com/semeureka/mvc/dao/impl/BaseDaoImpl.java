@@ -25,7 +25,7 @@ public class BaseDaoImpl<T, K extends Serializable> implements BaseDao<T, K> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public K save(T entity) {
-		return (K) currentSession().save(entity);
+		return (K) currentSession().merge(entity);
 	}
 
 	@Override

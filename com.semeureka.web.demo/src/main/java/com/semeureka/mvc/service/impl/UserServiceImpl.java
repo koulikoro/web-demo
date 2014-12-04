@@ -26,20 +26,25 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUsername(String username) {
-		return userDao.findByUsername(username);
-	}
-
-	@Override
-	public List<User> findAll() {
-		return userDao.findAll();
-	}
-
-	@Override
 	public void deleteById(Integer id) {
 		User user = userDao.findById(id);
 		if (user != null) {
 			userDao.delete(user);
 		}
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return userDao.findByUsername(username);
+	}
+
+	@Override
+	public User findById(Integer id) {
+		return userDao.findById(id);
+	}
+
+	@Override
+	public List<User> findAll() {
+		return userDao.findAll();
 	}
 }
