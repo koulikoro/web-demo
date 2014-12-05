@@ -56,4 +56,15 @@ public class Role {
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
+
+	public boolean contains(String permissionName) {
+		if (permissions != null && !permissions.isEmpty()) {
+			for (Permission permission : permissions) {
+				if (permission.getName().equals(permissionName)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -54,8 +54,14 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(Role role, @PathVariable Integer id, Model model) {
-		// TODO save the role
+	public String update(Role role, String[] permission, @PathVariable Integer id, Model model) {
+		role.setId(id);
+		Set<Permission> permissions = new HashSet<Permission>();
+		for (int i = 0; i < permission.length; i++) {
+			CollectionUtils.addIgnoreNull(permissions, permissionService.findByName(permission[i]));
+		}
+		role.setPermissions(permissions);
+		roleService.update(role);
 		return "redirect:/role";
 	}
 

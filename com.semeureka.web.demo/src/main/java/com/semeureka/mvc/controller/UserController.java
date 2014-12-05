@@ -60,8 +60,14 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(User user, @PathVariable Integer id, Model model) {
-		userService.save(user);
+	public String update(User user, Integer[] roleIds, @PathVariable Integer id, Model model) {
+		Set<Role> roles = new HashSet<Role>();
+		for (int i = 0; i < roleIds.length; i++) {
+			CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
+		}
+		user.setRoles(roles);
+		user.setId(id);
+		userService.update(user);
 		return "redirect:/user";
 	}
 

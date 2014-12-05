@@ -9,6 +9,8 @@ public interface RoleService {
 
 	void deleteById(Integer id);
 
+	void update(Role role);
+
 	List<Role> findAll();
 
 	Role findById(Integer id);

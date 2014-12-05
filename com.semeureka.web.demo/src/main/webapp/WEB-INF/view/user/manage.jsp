@@ -15,10 +15,10 @@
 			<button type="submit" class="btn btn-default btn-sm">查询</button>
 		</div>
 	</form>
-	<table class="table table-condensed table-bordered">
+	<table class="table table-condensed table-striped table-bordered">
 		<tr>
 			<th class="col-no">序号</th>
-			<th>所属部门</th>
+			<th>所属机构</th>
 			<th>用户账号</th>
 			<th></th>
 		</tr>

@@ -4,27 +4,27 @@
 <tt:frame>
 	<h1 class="page-header">用户登录</h1>
 	<form class="form-horizontal" action="${ctx}/user/login" method="post">
-		<div class="form-group">
-			<label class="col-xs-2 control-label">用户账号</label>
-			<div class="col-xs-10">
+		<div class="form-group form-group-sm">
+			<label class="col-md-2 control-label">用户账号</label>
+			<div class="col-md-10">
 				<input name="username" type="text" class="form-control" placeholder="用户账号">
 			</div>
 		</div>
-		<div class="form-group">
-			<label class="col-xs-2 control-label">用户密码</label>
-			<div class="col-xs-10">
+		<div class="form-group form-group-sm">
+			<label class="col-md-2 control-label">用户密码</label>
+			<div class="col-md-10">
 				<input name="password" type="password" class="form-control" placeholder="用户密码">
 			</div>
 		</div>
-		<div class="form-group">
-			<div class="col-xs-offset-2 col-xs-10">
+		<div class="form-group form-group-sm">
+			<div class="col-md-offset-2 col-md-10">
 				<div class="checkbox">
 					<label><input name="rememberMe" type="checkbox"> 记住我的密码 </label>
 				</div>
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="col-xs-offset-2 col-xs-10">
+			<div class="col-md-offset-2 col-md-10">
 				<button type="submit" class="btn btn-default">登录</button>
 			</div>
 		</div>

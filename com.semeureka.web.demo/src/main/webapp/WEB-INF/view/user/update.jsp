@@ -6,27 +6,27 @@
 	<h1 class="page-header">修改用户</h1>
 	<form id="user-update" class="form-horizontal" action="${ctx}/user/update/${user.id}" method="post">
 		<div class="form-group form-group-sm">
-			<label class="col-sm-2 control-label">用户账号</label>
-			<div class="col-sm-10">
-				<input name="username" value="${user.username}" type="text" class="form-control" placeholder="用户账号" required
+			<label class="col-md-2 control-label">用户账号</label>
+			<div class="col-md-10">
+				<input name="username" value="${user.username}" type="text" class="form-control" required
 					pattern="[\w]{6,30}|[\u4e00-\u9fa5]{2,15}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
-			<label class="col-sm-2 control-label">用户密码</label>
-			<div class="col-sm-10">
-				<input name="password" type="password" class="form-control" placeholder="用户密码" required pattern=".{6,30}">
+			<label class="col-md-2 control-label">用户密码</label>
+			<div class="col-md-10">
+				<input name="password" type="password" class="form-control" required pattern=".{6,30}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
-			<label class="col-sm-2 control-label">确认密码</label>
-			<div class="col-sm-10">
-				<input name="password2" type="password" class="form-control" placeholder="确认密码" required pattern=".{6,30}">
+			<label class="col-md-2 control-label">确认密码</label>
+			<div class="col-md-10">
+				<input name="password2" type="password" class="form-control" required pattern=".{6,30}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
-			<label class="col-sm-2 control-label">所属机构</label>
-			<div class="col-sm-10">
+			<label class="col-md-2 control-label">所属机构</label>
+			<div class="col-md-10">
 				<select name="organization.id" class="form-control" required>
 					<option></option>
 					<c:forEach items="${organizations}" var="organization">
@@ -36,8 +36,8 @@
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
-			<label class="col-sm-2 control-label">用户角色</label>
-			<div class="col-sm-10">
+			<label class="col-md-2 control-label">用户角色</label>
+			<div class="col-md-10">
 				<fieldset>
 					<c:forEach items="${roles}" var="role">
 						<label class="checkbox-inline"><input name="roleIds" type="checkbox" value="${role.id}" required
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
-			<div class="col-sm-offset-2 col-sm-10">
+			<div class="col-md-offset-2 col-md-10">
 				<button type="submit" class="btn btn-default">修改</button>
 			</div>
 		</div>

@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="false" type="java.lang.String"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="session" />
 <!DOCTYPE html>
@@ -37,6 +38,25 @@
 </script>
 </head>
 <body>
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+					data-target="#navbar-collapse-1">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">权限演示系统</a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="${ctx}/organization">机构</a></li>
+					<li><a href="${ctx}/user">用户</a></li>
+					<li><a href="${ctx}/role">角色</a></li>
+				</ul>
+				<p class="navbar-text navbar-right">当前用户（<shiro:principal />） <a href="${ctx}/user/logout" class="navbar-link"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></p>
+			</div>
+		</div>
+	</nav>
 	<div class="container">
 		<jsp:doBody />
 	</div>

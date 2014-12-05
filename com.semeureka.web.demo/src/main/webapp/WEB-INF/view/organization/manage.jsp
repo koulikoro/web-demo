@@ -3,7 +3,7 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
-	<h1 class="page-header">部门信息</h1>
+	<h1 class="page-header">机构信息</h1>
 	<form class="form-inline form-group clearfix" action="${ctx}/organization">
 		<shiro:hasPermission name="organization:create">
 			<a href="${ctx}/organization/create" class="btn btn-default btn-sm">添加</a>
@@ -17,9 +17,9 @@
 	</form>
 	<table class="table table-condensed table-striped table-bordered">
 		<tr>
-			<th>序号</th>
-			<th>所属部门</th>
-			<th>部门名称</th>
+			<th class="col-no">序号</th>
+			<th>上级机构</th>
+			<th>机构名称</th>
 			<th></th>
 		</tr>
 		<c:forEach items="${organizations}" var="organization" varStatus="status">

@@ -17,8 +17,9 @@ public class OrganizationController {
 	private OrganizationService organizationService;
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String create() {
-		return "/organization/create";
+	public String create(Model model) {
+		model.addAttribute("organizations", organizationService.findAll());
+		return "organization/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -30,6 +31,20 @@ public class OrganizationController {
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		organizationService.deleteById(id);
+		return "redirect:/organization";
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+	public String update(@PathVariable Integer id, Model model) {
+		model.addAttribute("organizations", organizationService.findAll());
+		model.addAttribute("organization", organizationService.findById(id));
+		return "organization/update";
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+	public String update(Organization organization, @PathVariable Integer id, Model model) {
+		organization.setId(id);
+		organizationService.save(organization);
 		return "redirect:/organization";
 	}
 

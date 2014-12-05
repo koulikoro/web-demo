@@ -9,5 +9,9 @@ public interface OrganizationService {
 
 	void deleteById(Integer id);
 
+	void update(Organization organization);
+
+	Organization findById(Integer id);
+
 	List<Organization> findAll();
 }

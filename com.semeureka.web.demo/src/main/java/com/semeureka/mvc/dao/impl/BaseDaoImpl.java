@@ -22,15 +22,19 @@ public class BaseDaoImpl<T, K extends Serializable> implements BaseDao<T, K> {
 		return sessionFactory.getCurrentSession();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public K save(T entity) {
-		return (K) currentSession().merge(entity);
+	public void save(T entity) {
+		currentSession().saveOrUpdate(entity);
 	}
 
 	@Override
 	public void delete(T entity) {
 		currentSession().delete(entity);
+	}
+
+	@Override
+	public void update(T entity) {
+		currentSession().update(entity);
 	}
 
 	@SuppressWarnings("unchecked")

@@ -30,6 +30,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
+	public void update(Organization organization) {
+		organizationDao.update(organization);
+	}
+
+	@Override
+	public Organization findById(Integer id) {
+		return organizationDao.findById(id);
+	}
+
+	@Override
 	public List<Organization> findAll() {
 		List<Organization> organizations = organizationDao.findAll();
 		return organizations;
