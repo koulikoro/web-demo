@@ -1,5 +1,7 @@
 package com.semeureka.mvc.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +10,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_permission")
-public class Permission {
+public class Permission implements Serializable {
+	private static final long serialVersionUID = 2518763746330214692L;
 	@Id
 	@GeneratedValue
 	private Integer id;
 	@Column(name = "permission_name")
 	private String name;
+	@Column(name = "permission_value")
+	private String value;
 	@Column(name = "permission_description")
 	private String description;
 
@@ -31,6 +36,14 @@ public class Permission {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getValue() {
+		return value == null || value.isEmpty() ? "permission" + id : value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
 	}
 
 	public String getDescription() {

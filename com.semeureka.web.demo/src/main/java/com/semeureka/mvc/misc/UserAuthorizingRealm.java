@@ -29,34 +29,34 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
-		String username = upToken.getUsername();
-		// Null username is invalid
-		if (username == null) {
-			throw new AccountException("Null usernames are not allowed by this realm.");
+		String account = upToken.getUsername();
+		// Null account is invalid
+		if (account == null || account.isEmpty()) {
+			throw new AccountException("Null accounts are not allowed by this realm.");
 		}
-		User user = userService.findByUsername(username);
+		User user = userService.findByAccount(account);
 		if (user == null) {
-			throw new UnknownAccountException("No account found for user [" + username + "]");
+			throw new UnknownAccountException("No account found for user [" + account + "]");
 		}
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(username, user.getPassword(), getName());
+		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
 		return info;
 	}
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		// null usernames are invalid
+		// null accounts are invalid
 		if (principals == null) {
 			throw new AuthorizationException("PrincipalCollection method argument cannot be null.");
 		}
-		String username = (String) principals.getPrimaryPrincipal();
-		User user = userService.findByUsername(username);
+		User user = (User) principals.getPrimaryPrincipal();
+		user = userService.findById(user.getId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		if (CollectionUtils.isNotEmpty(user.getRoles())) {
 			for (Role role : user.getRoles()) {
-				info.addRole(role.getName());
+				info.addRole(role.getValue());
 				if (CollectionUtils.isNotEmpty(role.getPermissions())) {
 					for (Permission permission : role.getPermissions()) {
-						info.addStringPermission(permission.getName());
+						info.addStringPermission(permission.getValue());
 					}
 				}
 			}

@@ -9,10 +9,6 @@ import com.semeureka.mvc.entity.Role;
 
 @Repository
 public class RoleDaoImpl extends BaseDaoImpl<Role, Integer> implements RoleDao {
-	public RoleDaoImpl() {
-		super(Role.class);
-	}
-
 	@Override
 	public Role findByName(String name) {
 		Criteria criteria = currentSession().createCriteria(Role.class);

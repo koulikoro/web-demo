@@ -32,19 +32,18 @@
 	<bean id="passwordService" class="org.apache.shiro.authc.credential.DefaultPasswordService" />
 	<bean id="userAuthorizingRealm" class="com.semeureka.mvc.misc.UserAuthorizingRealm">
 		<property name="userService" ref="userServiceImpl" />
-		<property name="authorizationCachingEnabled" value="false" />
+		<property name="cachingEnabled" value="false" />
 		<property name="credentialsMatcher">
 			<bean class="org.apache.shiro.authc.credential.PasswordMatcher">
 				<property name="passwordService" ref="passwordService" />
 			</bean>
 		</property>
 	</bean>
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="userAuthorizingRealm" />
+	</bean>
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager">
-			<bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-				<property name="realm" ref="userAuthorizingRealm" />
-			</bean>
-		</property>
+		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/user/login" />
 		<property name="successUrl" value="/user" />
 		<property name="unauthorizedUrl" value="/error" />
@@ -53,6 +52,18 @@
 				/resources/** = anon
 				/user/logout = logout
 				/user/login = authc
+				/user = perms[user:view]
+				/user/create = perms[user:create]
+				/user/delete = perms[user:delete]
+				/user/update = perms[user:update]
+				/role = perms[role:view]
+				/role/create = perms[role:create]
+				/role/delete = perms[role:delete]
+				/role/update = perms[role:update]
+				/organization = perms[organization:view]
+				/organization/create = perms[organization:create]
+				/organization/delete = perms[organization:delete]
+				/organization/update = perms[organization:update]
 				/** = user
 			</value>
 		</property>

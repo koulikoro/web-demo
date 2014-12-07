@@ -33,7 +33,7 @@ public class RoleController {
 	public String create(Role role, String[] permission) {
 		Set<Permission> permissions = new HashSet<Permission>();
 		for (int i = 0; i < permission.length; i++) {
-			CollectionUtils.addIgnoreNull(permissions, permissionService.findByName(permission[i]));
+			CollectionUtils.addIgnoreNull(permissions, permissionService.findByValue(permission[i]));
 		}
 		role.setPermissions(permissions);
 		roleService.save(role);
@@ -58,7 +58,7 @@ public class RoleController {
 		role.setId(id);
 		Set<Permission> permissions = new HashSet<Permission>();
 		for (int i = 0; i < permission.length; i++) {
-			CollectionUtils.addIgnoreNull(permissions, permissionService.findByName(permission[i]));
+			CollectionUtils.addIgnoreNull(permissions, permissionService.findByValue(permission[i]));
 		}
 		role.setPermissions(permissions);
 		roleService.update(role);
@@ -66,8 +66,8 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "")
-	public String manage(Model model) {
+	public String view(Model model) {
 		model.addAttribute("roles", roleService.findAll());
-		return "role/manage";
+		return "role/view";
 	}
 }

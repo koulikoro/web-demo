@@ -1,21 +1,25 @@
 package com.semeureka.mvc.dao.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.semeureka.mvc.dao.BaseDao;
 
-public class BaseDaoImpl<T, K extends Serializable> implements BaseDao<T, K> {
-	private final Class<T> entityClass;
+public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
+	protected Class<T> entityClass;
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public BaseDaoImpl(Class<T> entityClass) {
-		this.entityClass = entityClass;
+	@SuppressWarnings("unchecked")
+	public BaseDaoImpl() {
+		this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	protected Session currentSession() {
@@ -24,7 +28,7 @@ public class BaseDaoImpl<T, K extends Serializable> implements BaseDao<T, K> {
 
 	@Override
 	public void save(T entity) {
-		currentSession().saveOrUpdate(entity);
+		currentSession().save(entity);
 	}
 
 	@Override
@@ -37,15 +41,17 @@ public class BaseDaoImpl<T, K extends Serializable> implements BaseDao<T, K> {
 		currentSession().update(entity);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public T findById(K id) {
+	@SuppressWarnings("unchecked")
+	public T findById(ID id) {
 		return (T) currentSession().get(entityClass, id);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
-		return currentSession().createCriteria(entityClass).list();
+		Criteria criteria = currentSession().createCriteria(entityClass);
+		criteria.addOrder(Order.asc("id"));
+		return criteria.list();
 	}
 }

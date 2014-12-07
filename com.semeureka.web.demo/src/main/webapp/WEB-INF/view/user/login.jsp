@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">用户登录</h1>
-	<form class="form-horizontal" action="${ctx}/user/login" method="post">
+	<form id="user-login" class="form-horizontal" action="${ctx}/user/login" method="post">
 		<div class="form-group form-group-sm">
-			<label class="col-md-2 control-label">用户账号</label>
+			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
-				<input name="username" type="text" class="form-control" placeholder="用户账号">
+				<input name="username" type="text" class="form-control" required pattern="[\w]{4,30}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户密码</label>
 			<div class="col-md-10">
-				<input name="password" type="password" class="form-control" placeholder="用户密码">
+				<input name="password" type="password" class="form-control" required maxlength="255">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
@@ -29,4 +28,7 @@
 			</div>
 		</div>
 	</form>
+	<script type="text/javascript">
+		$('#user-login').validate();
+	</script>
 </tt:frame>

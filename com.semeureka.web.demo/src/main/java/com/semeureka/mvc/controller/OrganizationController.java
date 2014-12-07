@@ -23,7 +23,8 @@ public class OrganizationController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Organization organization) {
+	public String create(Organization organization, Integer parentId) {
+		organization.setParent(organizationService.findById(parentId));
 		organizationService.save(organization);
 		return "redirect:/organization";
 	}
@@ -42,15 +43,16 @@ public class OrganizationController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(Organization organization, @PathVariable Integer id, Model model) {
+	public String update(Organization organization, Integer parentId, @PathVariable Integer id, Model model) {
+		organization.setParent(organizationService.findById(parentId));
 		organization.setId(id);
 		organizationService.save(organization);
 		return "redirect:/organization";
 	}
 
 	@RequestMapping(value = "")
-	public String manage(Model model) {
+	public String view(Model model) {
 		model.addAttribute("organizations", organizationService.findAll());
-		return "organization/manage";
+		return "organization/view";
 	}
 }

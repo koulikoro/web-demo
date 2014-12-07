@@ -17,8 +17,8 @@ public class PermissionServiceImpl implements PermissionService {
 	private PermissionDao permissionDao;
 
 	@Override
-	public Permission findByName(String name) {
-		return permissionDao.findByName(name);
+	public Permission findByValue(String value) {
+		return permissionDao.findByValue(value);
 	}
 
 	@Override

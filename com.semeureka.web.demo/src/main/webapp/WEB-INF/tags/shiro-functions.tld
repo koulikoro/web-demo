@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd ">
+	<description>Apache Shiro JSP EL Library.</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>sh</short-name>
+	<uri>http://shiro.semeureka.com/functons</uri>
+
+	<function>
+		<name>subject</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>org.apache.shiro.subject.Subject subject()</function-signature>
+	</function>
+	<function>
+		<name>principal</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>java.lang.Object principal()</function-signature>
+	</function>
+	<function>
+		<name>guest</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean guest()</function-signature>
+	</function>
+	<function>
+		<name>user</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean user()</function-signature>
+	</function>
+	<function>
+		<name>authenticated</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean authenticated()</function-signature>
+	</function>
+	<function>
+		<name>notAuthenticated</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean notAuthenticated()</function-signature>
+	</function>
+	<function>
+		<name>hasPermission</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean hasPermission(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>lacksPermission</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean lacksPermission(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>hasRole</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean hasRole(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>hasAnyRoles</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean hasAnyRoles(java.lang.String)</function-signature>
+	</function>
+	<function>
+		<name>lacksRole</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>boolean lacksRole(java.lang.String)</function-signature>
+	</function>
+</taglib>

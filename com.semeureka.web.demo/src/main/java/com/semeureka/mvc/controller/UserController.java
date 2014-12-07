@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.credential.PasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	@Autowired
+	private PasswordService passwordService;
+	@Autowired
 	private RoleService roleService;
 	@Autowired
 	private OrganizationService organizationService;
@@ -37,10 +41,13 @@ public class UserController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(User user, Integer[] roleIds) {
 		Set<Role> roles = new HashSet<Role>();
-		for (int i = 0; i < roleIds.length; i++) {
-			CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
+		if (roleIds != null && roleIds.length > 0) {
+			for (int i = 0; i < roleIds.length; i++) {
+				CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
+			}
 		}
 		user.setRoles(roles);
+		user.setPassword(passwordService.encryptPassword(user.getPassword()));
 		userService.save(user);
 		return "redirect:/user";
 	}
@@ -61,23 +68,30 @@ public class UserController {
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String update(User user, Integer[] roleIds, @PathVariable Integer id, Model model) {
+		user.setId(id);
 		Set<Role> roles = new HashSet<Role>();
-		for (int i = 0; i < roleIds.length; i++) {
-			CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
+		if (roleIds != null && roleIds.length > 0) {
+			for (int i = 0; i < roleIds.length; i++) {
+				CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
+			}
 		}
 		user.setRoles(roles);
-		user.setId(id);
+		if (StringUtils.isNotEmpty(user.getPassword())) { // 用户密码为空时，保留原密码
+			user.setPassword(userService.findById(id).getPassword());
+		} else {
+			user.setPassword(passwordService.encryptPassword(user.getPassword()));
+		}
 		userService.update(user);
 		return "redirect:/user";
 	}
 
 	@RequestMapping(value = "")
-	public String manage(Model model) {
+	public String view(Model model) {
 		model.addAttribute("users", userService.findAll());
-		return "user/manage";
+		return "user/view";
 	}
 
-	@RequestMapping(value = "/login")
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "user/login";
 	}

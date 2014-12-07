@@ -13,7 +13,7 @@
 		<div class="form-group">
 			<label class="col-md-2 control-label">角色描述</label>
 			<div class="col-md-10">
-				<textarea name="description" rows="3" class="form-control" required maxlength="255" ></textarea>
+				<textarea name="description" rows="3" class="form-control" maxlength="255" ></textarea>
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
@@ -27,16 +27,6 @@
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
-			<label class="col-md-2 control-label">组织操作权限</label>
-			<div class="col-md-10">
-				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:*">全部</label>
-				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:create">添加</label>
-				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:delete">删除</label>
-				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:update">修改</label>
-				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:view">查看</label>
-			</div>
-		</div>
-		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">角色操作权限</label>
 			<div class="col-md-10">
 				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="role:*">全部</label>
@@ -44,6 +34,16 @@
 				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="role:delete">删除</label>
 				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="role:update">修改</label>
 				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="role:view">查看</label>
+			</div>
+		</div>
+		<div class="form-group form-group-sm">
+			<label class="col-md-2 control-label">机构操作权限</label>
+			<div class="col-md-10">
+				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:*">全部</label>
+				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:create">添加</label>
+				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:delete">删除</label>
+				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:update">修改</label>
+				<label class="checkbox-inline"> <input name="permission" type="checkbox" value="organization:view">查看</label>
 			</div>
 		</div>
 		<div class="form-group">

@@ -11,7 +11,7 @@ public interface UserService {
 
 	void update(User user);
 
-	User findByUsername(String username);
+	User findByAccount(String account);
 
 	User findById(Integer id);
 

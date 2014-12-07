@@ -1,5 +1,6 @@
 package com.semeureka.mvc.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -13,12 +14,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_role")
-public class Role {
+public class Role implements Serializable {
+	private static final long serialVersionUID = 8913103763305771359L;
 	@Id
 	@GeneratedValue
 	private Integer id;
 	@Column(name = "role_name")
 	private String name;
+	@Column(name = "role_value")
+	private String value;
 	@Column(name = "role_description")
 	private String description;
 	@ManyToMany
@@ -41,6 +45,14 @@ public class Role {
 		this.name = name;
 	}
 
+	public String getValue() {
+		return value == null || value.isEmpty() ? "role" + id : value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -57,10 +69,10 @@ public class Role {
 		this.permissions = permissions;
 	}
 
-	public boolean contains(String permissionName) {
-		if (permissions != null && !permissions.isEmpty()) {
-			for (Permission permission : permissions) {
-				if (permission.getName().equals(permissionName)) {
+	public boolean hasPermission(String permission) {
+		if (permissions != null) {
+			for (Permission p : permissions) {
+				if (p.getValue().equals(permission)) {
 					return true;
 				}
 			}

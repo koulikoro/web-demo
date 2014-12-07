@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
+<%@ taglib uri="http://shiro.semeureka.com/functons" prefix="sh"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">修改机构</h1>
-	<form id="organization-update" class="form-horizontal" action="${ctx}/organization/update/${organization.id}" method="post">
+	<form id="organization-update" class="form-horizontal" action="${ctx}/organization/update/${organization.id}"
+		method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">机构名称</label>
 			<div class="col-md-10">
@@ -14,8 +15,8 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">上级机构</label>
 			<div class="col-md-10">
-				<select name="parent.id" class="form-control" required>
-					<option></option>
+				<select name="parentId" class="form-control" required>
+					<option value="${sh:principal().organization.id}">${sh:principal().organization.name}</option>
 					<c:forEach items="${organizations}" var="parent">
 						<option value="${parent.id}" ${organization.parent eq parent ? 'selected' : ''}>${parent.name}</option>
 					</c:forEach>

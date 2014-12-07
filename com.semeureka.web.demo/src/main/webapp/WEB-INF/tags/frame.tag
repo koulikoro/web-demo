@@ -1,7 +1,8 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="false" type="java.lang.String"%>
-<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
+<%@ taglib uri="http://shiro.semeureka.com/functons" prefix="sh"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="session" />
 <!DOCTYPE html>
 <html lang="zh-cn">
@@ -45,15 +46,21 @@
 					data-target="#navbar-collapse-1">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">权限演示系统</a>
+				<a class="navbar-brand" href="#"><strong>权限演示系统</strong></a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="${ctx}/organization">机构</a></li>
-					<li><a href="${ctx}/user">用户</a></li>
-					<li><a href="${ctx}/role">角色</a></li>
+					<li class="${sh:hasPermission('user:view')?'':'hidden'}"><a href="${ctx}/user">用户</a></li>
+					<li class="${sh:hasPermission('role:view')?'':'hidden'}"><a href="${ctx}/role">角色</a></li>
+					<li class="${sh:hasPermission('organization:view')?'':'hidden'}"><a href="${ctx}/organization">机构</a></li>
 				</ul>
-				<p class="navbar-text navbar-right">当前用户（<shiro:principal />） <a href="${ctx}/user/logout" class="navbar-link"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></p>
+				<shiro:user>
+					<p class="navbar-text navbar-right">
+						当前用户（
+						<shiro:principal property="name" />
+						） <a href="${ctx}/user/logout" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span></a>
+					</p>
+				</shiro:user>
 			</div>
 		</div>
 	</nav>
