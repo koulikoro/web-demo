@@ -4,7 +4,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">修改机构</h1>
-	<form id="organization-update" class="form-horizontal" action="${ctx}/organization/update/${organization.id}"
+	<form class="form-horizontal validate" action="${ctx}/organization/update/${organization.id}"
 		method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">机构名称</label>
@@ -15,11 +15,8 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">上级机构</label>
 			<div class="col-md-10">
-				<select name="parentId" class="form-control" required>
-					<option value="${sh:principal().organization.id}">${sh:principal().organization.name}</option>
-					<c:forEach items="${organizations}" var="parent">
-						<option value="${parent.id}" ${organization.parent eq parent ? 'selected' : ''}>${parent.name}</option>
-					</c:forEach>
+				<select name="parentId" class="form-control">
+					<option value="${organization.parent.id}" selected>${organization.parent.name}</option>
 				</select>
 			</div>
 		</div>
@@ -29,7 +26,4 @@
 			</div>
 		</div>
 	</form>
-	<script type="text/javascript">
-		$('#organization-update').validate();
-	</script>
 </tt:frame>

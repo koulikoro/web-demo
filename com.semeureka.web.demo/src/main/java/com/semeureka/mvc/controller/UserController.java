@@ -76,7 +76,7 @@ public class UserController {
 			}
 		}
 		user.setRoles(roles);
-		if (StringUtils.isNotEmpty(user.getPassword())) { // 用户密码为空时，保留原密码
+		if (StringUtils.isEmpty(user.getPassword())) { // 用户密码为空时，保留原密码
 			user.setPassword(userService.findById(id).getPassword());
 		} else {
 			user.setPassword(passwordService.encryptPassword(user.getPassword()));

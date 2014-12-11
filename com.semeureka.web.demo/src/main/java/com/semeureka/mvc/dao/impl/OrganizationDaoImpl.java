@@ -13,12 +13,12 @@ import com.semeureka.mvc.entity.Organization;
 
 @Repository
 public class OrganizationDaoImpl extends BaseDaoImpl<Organization, Integer> implements OrganizationDao {
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Organization> find(Organization parent) {
 		Criteria criteria = currentSession().createCriteria(Organization.class);
 		if (parent != null) {
-			criteria.add(Restrictions.like("path", parent.getPath() + Organization.PATH_DELIMETER, MatchMode.START));
+			criteria.add(Restrictions.like("path", parent.getPath(), MatchMode.START));
 		}
 		criteria.addOrder(Order.asc("id"));
 		return criteria.list();

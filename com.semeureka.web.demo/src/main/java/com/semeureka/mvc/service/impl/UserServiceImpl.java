@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void update(User user) {
-		userDao.update(user);
+		userDao.save(user);
 	}
 
 	@Override
@@ -47,6 +47,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> findAll() {
-		return userDao.find(((User) ShiroUtils.principal()).getOrganization());
+		return userDao.find(ShiroUtils.principal().getOrganization());
 	}
 }

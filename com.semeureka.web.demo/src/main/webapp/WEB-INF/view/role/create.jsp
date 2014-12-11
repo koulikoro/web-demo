@@ -3,7 +3,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">添加角色</h1>
-	<form id="role-create" class="form-horizontal" action="${ctx}/role/create" method="post">
+	<form class="form-horizontal validate" action="${ctx}/role/create" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">角色名称</label>
 			<div class="col-md-10">
@@ -52,7 +52,4 @@
 			</div>
 		</div>
 	</form>
-	<script type="text/javascript">
-		$('#role-create').validate();
-	</script>
 </tt:frame>

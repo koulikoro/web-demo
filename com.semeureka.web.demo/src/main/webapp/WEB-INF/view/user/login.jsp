@@ -2,7 +2,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">用户登录</h1>
-	<form id="user-login" class="form-horizontal" action="${ctx}/user/login" method="post">
+	<form class="form-horizontal validate" action="${ctx}/user/login" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
@@ -28,7 +28,4 @@
 			</div>
 		</div>
 	</form>
-	<script type="text/javascript">
-		$('#user-login').validate();
-	</script>
 </tt:frame>

@@ -20,23 +20,7 @@
 <script src="${ctx}/resources/jquery/1.11.1/jquery.js"></script>
 <script src="${ctx}/resources/bootstrap/3.3.1/js/bootstrap.js"></script>
 <script src="${ctx}/resources/jquery.validate/1.13.1/jquery.validate.js"></script>
-<script src="${ctx}/resources/jquery.validate/1.13.1/additional-methods.js"></script>
-<script src="${ctx}/resources/jquery.validate/1.13.1/messages_zh.js"></script>
-<script type="text/javascript">
-	jQuery.validator.setDefaults({
-		errorClass : 'help-block hidden',
-		errorElement : 'p',
-		highlight : function(element, errorClass, validClass) {
-			$(element).closest('.form-group').addClass('has-warning');
-		},
-		unhighlight : function(element, errorClass, validClass) {
-			$(element).closest('.form-group').removeClass('has-warning');
-		},
-		errorPlacement : function(error, element) {
-			$(element).closest('div').append(error);
-		}
-	});
-</script>
+<script src="${ctx}/resources/custom/common.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -56,9 +40,8 @@
 				</ul>
 				<shiro:user>
 					<p class="navbar-text navbar-right">
-						当前用户（
-						<shiro:principal property="name" />
-						） <a href="${ctx}/user/logout" class="navbar-link"><span class="glyphicon glyphicon-log-out"></span></a>
+						当前用户（${sh:principal().name}） <a href="${ctx}/user/logout" class="navbar-link"><span
+							class="glyphicon glyphicon-log-out"></span></a>
 					</p>
 				</shiro:user>
 			</div>

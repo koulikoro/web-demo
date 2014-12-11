@@ -28,17 +28,12 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 
 	@Override
 	public void save(T entity) {
-		currentSession().save(entity);
+		currentSession().merge(entity);
 	}
 
 	@Override
 	public void delete(T entity) {
 		currentSession().delete(entity);
-	}
-
-	@Override
-	public void update(T entity) {
-		currentSession().update(entity);
 	}
 
 	@Override

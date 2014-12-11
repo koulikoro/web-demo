@@ -51,7 +51,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		User user = (User) principals.getPrimaryPrincipal();
 		user = userService.findById(user.getId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		if (CollectionUtils.isNotEmpty(user.getRoles())) {
+		if (user != null && CollectionUtils.isNotEmpty(user.getRoles())) {
 			for (Role role : user.getRoles()) {
 				info.addRole(role.getValue());
 				if (CollectionUtils.isNotEmpty(role.getPermissions())) {

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.semeureka.mvc.dao.OrganizationDao;
 import com.semeureka.mvc.entity.Organization;
-import com.semeureka.mvc.entity.User;
 import com.semeureka.mvc.misc.ShiroUtils;
 import com.semeureka.mvc.service.OrganizationService;
 
@@ -33,16 +32,16 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public void update(Organization organization) {
-		organizationDao.update(organization);
+		organizationDao.save(organization);
 	}
 
 	@Override
 	public Organization findById(Integer id) {
-		return organizationDao.findById(id);
+		return id != null ? organizationDao.findById(id) : null;
 	}
 
 	@Override
 	public List<Organization> findAll() {
-		return organizationDao.find(((User) ShiroUtils.principal()).getOrganization());
+		return organizationDao.find(ShiroUtils.principal().getOrganization());
 	}
 }

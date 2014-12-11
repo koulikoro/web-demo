@@ -3,7 +3,7 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <tt:frame>
 	<h1 class="page-header">修改角色</h1>
-	<form id="role-update" class="form-horizontal" action="${ctx}/role/update/${role.id}" method="post">
+	<form class="form-horizontal validate" action="${ctx}/role/update/${role.id}" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">角色名称</label>
 			<div class="col-md-10">
@@ -53,7 +53,4 @@
 			</div>
 		</div>
 	</form>
-	<script type="text/javascript">
-		$('#role-update').validate();
-	</script>
 </tt:frame>

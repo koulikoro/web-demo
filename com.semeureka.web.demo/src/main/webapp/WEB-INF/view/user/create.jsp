@@ -4,7 +4,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">添加用户</h1>
-	<form id="user-create" class="form-horizontal" action="${ctx}/user/create" method="post">
+	<form class="form-horizontal validate" action="${ctx}/user/create" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
@@ -15,7 +15,7 @@
 		<div class="form-group form-group-sm hidden">
 			<label class="col-md-2 control-label">用户密码</label>
 			<div class="col-md-10">
-				<input name="password" value="123456" type="password" class="form-control">
+				<input name="password" value="123456" type="text" class="form-control">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
@@ -27,8 +27,7 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">所属机构</label>
 			<div class="col-md-10">
-				<select name="organization.id" class="form-control" required>
-					<option value="${sh:principal().organization.id}">${sh:principal().organization.name}</option>
+				<select name="organization.id" class="form-control">
 					<c:forEach items="${organizations}" var="organization">
 						<option value="${organization.id}">${organization.name}</option>
 					</c:forEach>
@@ -49,7 +48,4 @@
 			</div>
 		</div>
 	</form>
-	<script type="text/javascript">
-		$('#user-create').validate();
-	</script>
 </tt:frame>

@@ -18,15 +18,16 @@
 			<th class="col-no">序号</th>
 			<th>角色名称</th>
 			<th>角色描述</th>
-			<th></th>
+			<th>操作</th>
 		</tr>
 		<c:forEach items="${roles}" var="role" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
 				<td>${role.name}</td>
 				<td>${role.description}</td>
-				<td><a href="${ctx}/role/delete/${role.id}" class="${sh:hasPermission('role:delete')?'':'hidden'}">删除</a>
-					<a href="${ctx}/role/update/${role.id}" class="${sh:hasPermission('role:update')?'':'hidden'}">修改</a></td>
+				<td><a href="${ctx}/role/delete/${role.id}"
+					class="confirm-ajax${sh:hasPermission('role:delete')?'':' hidden'}">删除</a> <a
+					href="${ctx}/role/update/${role.id}" class="${sh:hasPermission('role:update')?'':'hidden'}">修改</a></td>
 			</tr>
 		</c:forEach>
 	</table>

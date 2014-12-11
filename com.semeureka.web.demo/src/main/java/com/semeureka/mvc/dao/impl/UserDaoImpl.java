@@ -26,9 +26,10 @@ public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {
 	@SuppressWarnings("unchecked")
 	public List<User> find(Organization organization) {
 		Criteria criteria = currentSession().createCriteria(User.class);
-		criteria.createAlias("organization", "Organization", JoinType.LEFT_OUTER_JOIN);
-		criteria.add(Restrictions.like("Organization.path", organization.getPath() + Organization.PATH_DELIMETER,
-				MatchMode.START));
+		if (organization != null) {
+			criteria.createAlias("organization", "Organization", JoinType.LEFT_OUTER_JOIN);
+			criteria.add(Restrictions.like("Organization.path", organization.getPath(), MatchMode.START));
+		}
 		criteria.addOrder(Order.asc("id"));
 		return criteria.list();
 	}

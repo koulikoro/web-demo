@@ -21,10 +21,10 @@ public class Organization implements Serializable {
 	@Column(name = "organization_name")
 	private String name;
 	@ManyToOne
-	@JoinColumn(name = "parent_id")
+	@JoinColumn(name = "parent_id", updatable = false)
 	private Organization parent;
-	@Column(name = "organization_path")
-	private String path;
+	@Column(name = "organization_path", updatable = false)
+	private String path = PATH_DELIMETER;
 
 	public Integer getId() {
 		return id;
@@ -48,6 +48,9 @@ public class Organization implements Serializable {
 
 	public void setParent(Organization parent) {
 		this.parent = parent;
+		if (parent != null) {
+			path = parent.path + parent.id + PATH_DELIMETER;
+		}
 	}
 
 	public String getPath() {

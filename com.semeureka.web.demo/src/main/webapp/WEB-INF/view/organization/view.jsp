@@ -27,7 +27,7 @@
 				<td>${organization.name}</td>
 				<td>${organization.parent.name}</td>
 				<td><a href="${ctx}/organization/delete/${organization.id}"
-					class="${sh:hasPermission('organization:delete')?'':'hidden'}">删除</a> <a
+					class="confirm-ajax${sh:hasPermission('organization:delete')?'':' hidden'}">删除</a> <a
 					href="${ctx}/organization/update/${organization.id}"
 					class="${sh:hasPermission('organization:delete')?'':'hidden'}">修改</a></td>
 			</tr>

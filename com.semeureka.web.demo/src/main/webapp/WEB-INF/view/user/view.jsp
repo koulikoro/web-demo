@@ -27,10 +27,9 @@
 				<td>${user.account}</td>
 				<td>${user.name}</td>
 				<td>${user.organization.name}</td>
-				<td><a href="${ctx}/user/delete/${user.id}" class="${sh:hasPermission('user:delete')?'':'hidden'}">删除</a>
+				<td><a href="${ctx}/user/delete/${user.id}" class="confirm-ajax${sh:hasPermission('user:delete')?'':' hidden'}">删除</a>
 					<a href="${ctx}/user/update/${user.id}" class="${sh:hasPermission('user:update')?'':'hidden'}">修改</a></td>
 			</tr>
 		</c:forEach>
 	</table>
-
 </tt:frame>
