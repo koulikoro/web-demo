@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.semeureka.mvc.entity.Organization;
+import com.semeureka.mvc.misc.ShiroUtils;
 import com.semeureka.mvc.service.OrganizationService;
 
 @Controller
@@ -18,13 +19,12 @@ public class OrganizationController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("organizations", organizationService.findAll());
+		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		return "organization/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Organization organization, Integer parentId) {
-		organization.setParent(organizationService.findById(parentId));
+	public String create(Organization organization) {
 		organizationService.save(organization);
 		return "redirect:/organization";
 	}
@@ -37,22 +37,24 @@ public class OrganizationController {
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
-		model.addAttribute("organizations", organizationService.findAll());
+		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		model.addAttribute("organization", organizationService.findById(id));
 		return "organization/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(Organization organization, Integer parentId, @PathVariable Integer id, Model model) {
-		organization.setParent(organizationService.findById(parentId));
+	public String update(Organization organization, @PathVariable Integer id, Model model) {
 		organization.setId(id);
-		organizationService.save(organization);
+		if (organization.getParent().getId() == null) {
+			organization.setParent(null);
+		}
+		organizationService.update(organization);
 		return "redirect:/organization";
 	}
 
 	@RequestMapping(value = "")
 	public String view(Model model) {
-		model.addAttribute("organizations", organizationService.findAll());
+		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		return "organization/view";
 	}
 }

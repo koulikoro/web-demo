@@ -27,8 +27,9 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 	}
 
 	@Override
-	public void save(T entity) {
-		currentSession().merge(entity);
+	@SuppressWarnings("unchecked")
+	public T save(T entity) {
+		return (T) currentSession().merge(entity);
 	}
 
 	@Override

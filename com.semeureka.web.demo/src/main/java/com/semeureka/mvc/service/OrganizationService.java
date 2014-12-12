@@ -13,5 +13,5 @@ public interface OrganizationService {
 
 	Organization findById(Integer id);
 
-	List<Organization> findAll();
+	List<Organization> find(Organization parent);
 }

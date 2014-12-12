@@ -19,7 +19,7 @@ public class Role implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@Column(name = "role_name")
+	@Column(name = "role_name", unique = true, nullable = false)
 	private String name;
 	@Column(name = "role_value")
 	private String value;

@@ -6,6 +6,12 @@
 	<h1 class="page-header">添加用户</h1>
 	<form class="form-horizontal validate" action="${ctx}/user/create" method="post">
 		<div class="form-group form-group-sm">
+			<label class="col-md-2 control-label">用户名称</label>
+			<div class="col-md-10">
+				<input name="name" type="text" class="form-control" required pattern="[\w]{4,30}|[\u4e00-\u9fa5]{2,15}">
+			</div>
+		</div>
+		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
 				<input name="account" type="text" class="form-control" required pattern="[\w]{4,30}">
@@ -16,12 +22,6 @@
 			<label class="col-md-2 control-label">用户密码</label>
 			<div class="col-md-10">
 				<input name="password" value="123456" type="text" class="form-control">
-			</div>
-		</div>
-		<div class="form-group form-group-sm">
-			<label class="col-md-2 control-label">用户名称</label>
-			<div class="col-md-10">
-				<input name="name" type="text" class="form-control" required pattern="[\w]{4,30}|[\u4e00-\u9fa5]{2,15}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">

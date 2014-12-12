@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.semeureka.mvc.dao.UserDao;
+import com.semeureka.mvc.entity.Organization;
 import com.semeureka.mvc.entity.User;
-import com.semeureka.mvc.misc.ShiroUtils;
 import com.semeureka.mvc.service.UserService;
 
 @Service
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findAll() {
-		return userDao.find(ShiroUtils.principal().getOrganization());
+	public List<User> find(Organization parent) {
+		return userDao.find(parent);
 	}
 }

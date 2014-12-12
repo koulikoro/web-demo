@@ -1,26 +1,35 @@
 package com.semeureka.mvc.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_permission")
 public class Permission implements Serializable {
 	private static final long serialVersionUID = 2518763746330214692L;
+	public static final String ROOT_PERMISSION = "*";
 	@Id
 	@GeneratedValue
 	private Integer id;
 	@Column(name = "permission_name")
 	private String name;
-	@Column(name = "permission_value")
+	@Column(name = "permission_value", unique = true, nullable = false)
 	private String value;
 	@Column(name = "permission_description")
 	private String description;
+	@OneToMany
+	@JoinColumn(name = "parent_id")
+	@OrderBy("id")
+	private Set<Permission> children;
 
 	public Integer getId() {
 		return id;
@@ -52,5 +61,13 @@ public class Permission implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Set<Permission> getChildren() {
+		return children;
+	}
+
+	public void setChildren(Set<Permission> children) {
+		this.children = children;
 	}
 }

@@ -25,15 +25,16 @@ public class RoleController {
 	private PermissionService permissionService;
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public String create() {
-		return "/role/create";
+	public String create(Model model) {
+		model.addAttribute("root", permissionService.findByValue(Permission.ROOT_PERMISSION));
+		return "role/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Role role, String[] permission) {
+	public String create(Role role, Integer[] permissionIds) {
 		Set<Permission> permissions = new HashSet<Permission>();
-		for (int i = 0; i < permission.length; i++) {
-			CollectionUtils.addIgnoreNull(permissions, permissionService.findByValue(permission[i]));
+		for (int i = 0; i < permissionIds.length; i++) {
+			CollectionUtils.addIgnoreNull(permissions, permissionService.findById(permissionIds[i]));
 		}
 		role.setPermissions(permissions);
 		roleService.save(role);
@@ -49,16 +50,16 @@ public class RoleController {
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
 		model.addAttribute("role", roleService.findById(id));
-		model.addAttribute("permissions", permissionService.findAll());
+		model.addAttribute("root", permissionService.findByValue(Permission.ROOT_PERMISSION));
 		return "role/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(Role role, String[] permission, @PathVariable Integer id, Model model) {
+	public String update(Role role, Integer[] permissionIds, @PathVariable Integer id, Model model) {
 		role.setId(id);
 		Set<Permission> permissions = new HashSet<Permission>();
-		for (int i = 0; i < permission.length; i++) {
-			CollectionUtils.addIgnoreNull(permissions, permissionService.findByValue(permission[i]));
+		for (int i = 0; i < permissionIds.length; i++) {
+			CollectionUtils.addIgnoreNull(permissions, permissionService.findById(permissionIds[i]));
 		}
 		role.setPermissions(permissions);
 		roleService.update(role);

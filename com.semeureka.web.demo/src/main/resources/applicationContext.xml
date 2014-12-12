@@ -21,7 +21,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
 			</props>
 		</property>
 	</bean>
@@ -46,7 +46,7 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/user/login" />
 		<property name="successUrl" value="/user" />
-		<property name="unauthorizedUrl" value="/error" />
+		<property name="unauthorizedUrl" value="/error/unauthorized" />
 		<property name="filterChainDefinitions">
 			<value>
 				/resources/** = anon

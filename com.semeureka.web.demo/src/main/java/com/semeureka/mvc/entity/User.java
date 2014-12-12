@@ -1,6 +1,7 @@
 package com.semeureka.mvc.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -20,9 +21,9 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@Column(name = "user_account")
+	@Column(name = "user_account", unique = true, nullable = false)
 	private String account;
-	@Column(name = "user_password")
+	@Column(name = "user_password", nullable = false)
 	private String password;
 	@Column(name = "user_locked")
 	private boolean locked;
@@ -34,6 +35,10 @@ public class User implements Serializable {
 	@ManyToMany
 	@JoinTable(name = "t_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+	@Column(name = "create_time", updatable = false)
+	private Date createTime;
+	@Column(name = "update_time")
+	private Date updateTime;
 
 	public Integer getId() {
 		return id;
@@ -89,6 +94,22 @@ public class User implements Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public boolean hasRole(String role) {

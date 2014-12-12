@@ -2,6 +2,7 @@ package com.semeureka.mvc.service;
 
 import java.util.List;
 
+import com.semeureka.mvc.entity.Organization;
 import com.semeureka.mvc.entity.User;
 
 public interface UserService {
@@ -15,5 +16,5 @@ public interface UserService {
 
 	User findById(Integer id);
 
-	List<User> findAll();
+	List<User> find(Organization parent);
 }

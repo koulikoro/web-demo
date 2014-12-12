@@ -6,6 +6,13 @@
 	<h1 class="page-header">修改用户</h1>
 	<form class="form-horizontal validate" action="${ctx}/user/update/${user.id}" method="post">
 		<div class="form-group form-group-sm">
+			<label class="col-md-2 control-label">用户名称</label>
+			<div class="col-md-10">
+				<input name="name" value="${user.name}" type="text" class="form-control" required
+					pattern="[\w]{4,30}|[\u4e00-\u9fa5]{2,15}">
+			</div>
+		</div>
+		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
 				<input name="account" value="${user.account}" type="text" class="form-control" required pattern="[\w]{4,30}">
@@ -16,13 +23,6 @@
 			<div class="col-md-10">
 				<input name="password" type="text" class="form-control" pattern=".{6,30}">
 				<p class="help-block">用户密码为空时“保留”原用户密码。</p>
-			</div>
-		</div>
-		<div class="form-group form-group-sm">
-			<label class="col-md-2 control-label">用户名称</label>
-			<div class="col-md-10">
-				<input name="name" value="${user.name}" type="text" class="form-control" required
-					pattern="[\w]{4,30}|[\u4e00-\u9fa5]{2,15}">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">

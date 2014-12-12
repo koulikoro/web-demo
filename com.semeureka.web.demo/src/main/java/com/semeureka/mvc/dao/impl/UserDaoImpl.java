@@ -1,5 +1,6 @@
 package com.semeureka.mvc.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -15,6 +16,16 @@ import com.semeureka.mvc.entity.User;
 
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {
+	@Override
+	public User save(User entity) {
+		if (entity.getId() == null) {
+			entity.setCreateTime(new Date());
+		} else {
+			entity.setUpdateTime(new Date());
+		}
+		return super.save(entity);
+	}
+
 	@Override
 	public User findByAccount(String account) {
 		Criteria criteria = currentSession().createCriteria(User.class);

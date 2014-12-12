@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Refresh" content="0;URL=${ctx}/user">
+<meta http-equiv="Refresh" content="0;URL=${ctx}/organization">
 <title>Loading...</title>
 <link href="${ctx}/resources/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 <!--[if lt IE 9]>
@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="page-header">Loading...</h1>
+		<h1 class="page-header">正在跳转到首页...</h1>
 	</div>
 	<script src="${ctx}/resources/jquery/1.11.1/jquery.js"></script>
 	<script src="${ctx}/resources/bootstrap/3.3.1/js/bootstrap.min.js"></script>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.semeureka.mvc.entity.Role;
 import com.semeureka.mvc.entity.User;
+import com.semeureka.mvc.misc.ShiroUtils;
 import com.semeureka.mvc.service.OrganizationService;
 import com.semeureka.mvc.service.RoleService;
 import com.semeureka.mvc.service.UserService;
@@ -34,7 +35,7 @@ public class UserController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("roles", roleService.findAll());
-		model.addAttribute("organizations", organizationService.findAll());
+		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		return "user/create";
 	}
 
@@ -62,7 +63,7 @@ public class UserController {
 	public String update(@PathVariable Integer id, Model model) {
 		model.addAttribute("user", userService.findById(id));
 		model.addAttribute("roles", roleService.findAll());
-		model.addAttribute("organizations", organizationService.findAll());
+		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		return "user/update";
 	}
 
@@ -87,12 +88,28 @@ public class UserController {
 
 	@RequestMapping(value = "")
 	public String view(Model model) {
-		model.addAttribute("users", userService.findAll());
+		model.addAttribute("users", userService.find(ShiroUtils.organization()));
 		return "user/view";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login")
 	public String login() {
 		return "user/login";
+	}
+
+	@RequestMapping(value = "/password", method = RequestMethod.GET)
+	public String password(Model model) {
+		model.addAttribute("user", userService.findById(ShiroUtils.principal().getId()));
+		return "user/password";
+	}
+
+	@RequestMapping(value = "/password", method = RequestMethod.POST)
+	public String password(String oldPassword, String newPassword) {
+		User user = userService.findById(ShiroUtils.principal().getId());
+		if (passwordService.passwordsMatch(oldPassword, user.getPassword())) {
+			user.setPassword(passwordService.encryptPassword(newPassword));
+			userService.save(user);
+		}
+		return "redirect:/";
 	}
 }

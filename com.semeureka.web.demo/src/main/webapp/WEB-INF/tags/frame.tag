@@ -34,14 +34,15 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 				<ul class="nav navbar-nav">
+					<li class="${sh:hasPermission('organization:view')?'':'hidden'}"><a href="${ctx}/organization">机构</a></li>
 					<li class="${sh:hasPermission('user:view')?'':'hidden'}"><a href="${ctx}/user">用户</a></li>
 					<li class="${sh:hasPermission('role:view')?'':'hidden'}"><a href="${ctx}/role">角色</a></li>
-					<li class="${sh:hasPermission('organization:view')?'':'hidden'}"><a href="${ctx}/organization">机构</a></li>
 				</ul>
 				<shiro:user>
 					<p class="navbar-text navbar-right">
-						当前用户（${sh:principal().name}） <a href="${ctx}/user/logout" class="navbar-link"><span
-							class="glyphicon glyphicon-log-out"></span></a>
+						当前用户（${sh:principal().name}） <a href="${ctx}/user/password" class="navbar-link"><span
+							class="glyphicon glyphicon-lock"></span></a> <a href="${ctx}/user/logout" class="navbar-link confirm"
+							data-confirm="确认要退出吗?"><span class="glyphicon glyphicon-log-out"></span></a>
 					</p>
 				</shiro:user>
 			</div>

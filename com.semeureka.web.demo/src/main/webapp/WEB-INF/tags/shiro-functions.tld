@@ -14,7 +14,12 @@
 	<function>
 		<name>principal</name>
 		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
-		<function-signature>java.lang.Object principal()</function-signature>
+		<function-signature>com.semeureka.mvc.entity.User principal()</function-signature>
+	</function>
+	<function>
+		<name>organization</name>
+		<function-class>com.semeureka.mvc.misc.ShiroUtils</function-class>
+		<function-signature>com.semeureka.mvc.entity.Organization organization()</function-signature>
 	</function>
 	<function>
 		<name>guest</name>

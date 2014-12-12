@@ -1,5 +1,6 @@
 package com.semeureka.mvc.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -13,6 +14,19 @@ import com.semeureka.mvc.entity.Organization;
 
 @Repository
 public class OrganizationDaoImpl extends BaseDaoImpl<Organization, Integer> implements OrganizationDao {
+	@Override
+	public Organization save(Organization entity) {
+		if (entity.getId() == null) {
+			entity.setCreateTime(new Date());
+		} else {
+			entity.setUpdateTime(new Date());
+		}
+		entity = super.save(entity);
+		entity.setPath((entity.getParent() != null ? entity.getParent().getPath() : "") + entity.getId()
+				+ Organization.PATH_DELIMETER);
+		return entity;
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Organization> find(Organization parent) {

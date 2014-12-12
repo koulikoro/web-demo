@@ -1,6 +1,7 @@
 package com.semeureka.mvc.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,10 +22,14 @@ public class Organization implements Serializable {
 	@Column(name = "organization_name")
 	private String name;
 	@ManyToOne
-	@JoinColumn(name = "parent_id", updatable = false)
+	@JoinColumn(name = "parent_id")
 	private Organization parent;
-	@Column(name = "organization_path", updatable = false)
-	private String path = PATH_DELIMETER;
+	@Column(name = "organization_path")
+	private String path;
+	@Column(name = "create_time", updatable = false)
+	private Date createTime;
+	@Column(name = "update_time")
+	private Date updateTime;
 
 	public Integer getId() {
 		return id;
@@ -48,13 +53,30 @@ public class Organization implements Serializable {
 
 	public void setParent(Organization parent) {
 		this.parent = parent;
-		if (parent != null) {
-			path = parent.path + parent.id + PATH_DELIMETER;
-		}
 	}
 
 	public String getPath() {
 		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	@Override

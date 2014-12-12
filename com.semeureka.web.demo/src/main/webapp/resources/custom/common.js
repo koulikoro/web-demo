@@ -27,13 +27,15 @@ $(function() {
 	// 启用jQuery.validator验证功能
 	$('form.validate').validate();
 	// 添加.confirm，.confirm-ajax两个类的操作前确认功能
-	$('a.confirm').click(function() {
-		if (!confirm('确认要执行该操作吗?')) {
+	$('.confirm').click(function() {
+		var title = $(this).data('confirm') || '确认要执行该操作吗?';
+		if (!confirm(title)) {
 			return false;
 		}
 	});
-	$('a.confirm-ajax').click(function() {
-		if (!confirm('确认要执行该操作吗?')) {
+	$('.confirm-ajax').click(function() {
+		var title = $(this).data('confirm') || '确认要执行该操作吗?';
+		if (!confirm(title)) {
 			return false;
 		}
 		var url = $(this).attr('href');
