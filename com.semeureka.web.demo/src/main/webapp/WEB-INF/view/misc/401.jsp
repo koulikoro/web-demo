@@ -6,10 +6,10 @@
 	</h1>
 	<script type="text/javascript">
 		setInterval(function() {
-			$('#time').text($('#time').text() - 1);
-			if ($('#time').text() == 0) {
+			if ($('#time').text() = 0) {
 				location.href = '${ctx}/user/logout';
 			}
+			$('#time').text($('#time').text() - 1);
 		}, 1000);
 	</script>
 </tt:frame>

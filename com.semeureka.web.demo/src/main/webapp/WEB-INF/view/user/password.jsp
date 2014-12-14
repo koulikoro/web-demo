@@ -31,7 +31,7 @@
 		</div>
 		<div class="form-group form-group-sm">
 			<div class="col-md-offset-2 col-md-10">
-				<button type="submit" class="btn btn-default">修改</button>
+				<button type="submit" class="btn btn-default btn-sm">修改</button>
 			</div>
 		</div>
 	</form>

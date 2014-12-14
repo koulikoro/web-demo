@@ -9,6 +9,8 @@
 	</context:component-scan>
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:view-controller path="/error/401" view-name="/misc/401" />
+	<mvc:view-controller path="/theme" view-name="/misc/theme" />
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/view/" />

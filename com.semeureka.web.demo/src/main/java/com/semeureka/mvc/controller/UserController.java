@@ -36,7 +36,7 @@ public class UserController {
 	public String create(Model model) {
 		model.addAttribute("roles", roleService.findAll());
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
-		return "user/create";
+		return "/user/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -64,7 +64,7 @@ public class UserController {
 		model.addAttribute("user", userService.findById(id));
 		model.addAttribute("roles", roleService.findAll());
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
-		return "user/update";
+		return "/user/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
@@ -86,7 +86,7 @@ public class UserController {
 		return "redirect:/user";
 	}
 
-	@RequestMapping(value = "")
+	@RequestMapping(method = RequestMethod.GET)
 	public String view(Model model) {
 		model.addAttribute("users", userService.find(ShiroUtils.organization()));
 		return "user/view";
@@ -94,13 +94,13 @@ public class UserController {
 
 	@RequestMapping(value = "/login")
 	public String login() {
-		return "user/login";
+		return "/user/login";
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.GET)
 	public String password(Model model) {
 		model.addAttribute("user", userService.findById(ShiroUtils.principal().getId()));
-		return "user/password";
+		return "/user/password";
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.POST)

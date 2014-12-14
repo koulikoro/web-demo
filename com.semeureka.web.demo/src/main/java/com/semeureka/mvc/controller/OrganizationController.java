@@ -20,7 +20,7 @@ public class OrganizationController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
-		return "organization/create";
+		return "/organization/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -39,7 +39,7 @@ public class OrganizationController {
 	public String update(@PathVariable Integer id, Model model) {
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		model.addAttribute("organization", organizationService.findById(id));
-		return "organization/update";
+		return "/organization/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
@@ -52,9 +52,9 @@ public class OrganizationController {
 		return "redirect:/organization";
 	}
 
-	@RequestMapping(value = "")
+	@RequestMapping(method = RequestMethod.GET)
 	public String view(Model model) {
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
-		return "organization/view";
+		return "/organization/view";
 	}
 }

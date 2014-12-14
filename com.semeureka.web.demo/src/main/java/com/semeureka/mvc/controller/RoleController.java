@@ -27,7 +27,7 @@ public class RoleController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
 		model.addAttribute("root", permissionService.findByValue(Permission.ROOT_PERMISSION));
-		return "role/create";
+		return "/role/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -51,7 +51,7 @@ public class RoleController {
 	public String update(@PathVariable Integer id, Model model) {
 		model.addAttribute("role", roleService.findById(id));
 		model.addAttribute("root", permissionService.findByValue(Permission.ROOT_PERMISSION));
-		return "role/update";
+		return "/role/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
@@ -66,9 +66,9 @@ public class RoleController {
 		return "redirect:/role";
 	}
 
-	@RequestMapping(value = "")
+	@RequestMapping(method = RequestMethod.GET)
 	public String view(Model model) {
 		model.addAttribute("roles", roleService.findAll());
-		return "role/view";
+		return "/role/view";
 	}
 }

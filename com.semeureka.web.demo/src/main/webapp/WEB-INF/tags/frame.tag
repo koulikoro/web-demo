@@ -30,7 +30,7 @@
 					data-target="#navbar-collapse-1">
 					<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#"><strong>权限演示系统</strong></a>
+				<a class="navbar-brand" href="${ctx}/theme">权限演示系统</a>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 				<ul class="nav navbar-nav">

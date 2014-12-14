@@ -4,7 +4,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
 <tt:frame>
 	<h1 class="page-header">添加机构</h1>
-	<form id="organization-create validate" class="form-horizontal" action="${ctx}/organization/create"
+	<form id="organization-create" class="form-horizontal validate" action="${ctx}/organization/create"
 		method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">机构名称</label>

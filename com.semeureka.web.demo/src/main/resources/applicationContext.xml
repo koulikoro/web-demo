@@ -46,7 +46,7 @@
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/user/login" />
 		<property name="successUrl" value="/user" />
-		<property name="unauthorizedUrl" value="/error/unauthorized" />
+		<property name="unauthorizedUrl" value="/error/401" />
 		<property name="filterChainDefinitions">
 			<value>
 				/resources/** = anon
