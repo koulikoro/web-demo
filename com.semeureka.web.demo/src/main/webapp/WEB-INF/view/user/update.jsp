@@ -30,7 +30,7 @@
 			<div class="col-md-10">
 				<select name="organization.id" class="form-control">
 					<c:forEach items="${organizations}" var="organization">
-						<option value="${organization.id}" ${user.organization eq organization ? 'selected' : ''}>${organization.name}</option>
+						<option value="${organization.id}" ${user.belongs(organization)?'selected':''}>${organization.name}</option>
 					</c:forEach>
 				</select>
 			</div>
@@ -40,7 +40,7 @@
 			<div class="col-md-10">
 				<c:forEach items="${roles}" var="role">
 					<label class="checkbox-inline"><input name="roleIds" type="checkbox" value="${role.id}"
-						${user.hasRole(role.value)?'checked':''}>${role.name}</label>
+						${user.contains(role)?'checked':''}>${role.name}</label>
 				</c:forEach>
 			</div>
 		</div>

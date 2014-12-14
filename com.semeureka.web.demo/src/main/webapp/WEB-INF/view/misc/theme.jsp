@@ -4,11 +4,7 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="sh"%>
 <tt:frame>
 	<h1 class="page-header">风格样式</h1>
-	<c:set var="themes"
-		value="cerulean,cosmo,cyborg,darkly,flatly,lumen,paper,sandstone,simplex,slate,superhero,united" />
-	<c:forTokens items="${themes}" delims="," var="theme">
-
-	</c:forTokens>
+	<c:set var="themes" value="cerulean,cosmo,cyborg,darkly,flatly,lumen,paper,sandstone,simplex,slate,superhero,united" />
 	<form class="form-horizontal">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">风格样式类型</label>

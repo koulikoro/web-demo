@@ -29,7 +29,7 @@
 				<td><a href="${ctx}/organization/delete/${organization.id}"
 					class="confirm-ajax${sh:hasPermission('organization:delete')?'':' hidden'}">删除</a> <a
 					href="${ctx}/organization/update/${organization.id}"
-					class="${sh:hasPermission('organization:delete')?'':'hidden'}">修改</a></td>
+					class="${sh:hasPermission('organization:update')?'':'hidden'}">修改</a></td>
 			</tr>
 		</c:forEach>
 	</table>

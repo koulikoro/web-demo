@@ -5,7 +5,7 @@
 <tt:frame>
 	<h1 class="page-header">角色信息</h1>
 	<form class="form-inline form-group clearfix" action="${ctx}/role">
-		<a href="${ctx}/role/create" class="btn btn-default btn-sm${sh:hasPermission('role:create')?'':' hidden'}">添加</a>
+		<a href="${ctx}/role/create" class="btn btn-default btn-sm ${sh:hasPermission('role:create')?'':'hidden'}">添加</a>
 		<div class="pull-right">
 			<div class="form-group">
 				<input type="text" class="form-control input-sm" placeholder="查询条件">
@@ -25,9 +25,8 @@
 				<td>${status.count}</td>
 				<td>${role.name}</td>
 				<td>${role.description}</td>
-				<td><a href="${ctx}/role/delete/${role.id}"
-					class="confirm-ajax${sh:hasPermission('role:delete')?'':' hidden'}">删除</a> <a
-					href="${ctx}/role/update/${role.id}" class="${sh:hasPermission('role:update')?'':'hidden'}">修改</a></td>
+				<td><a href="${ctx}/role/delete/${role.id}" class="confirm-ajax ${sh:hasPermission('role:delete')?'':'hidden'}">删除</a>
+					<a href="${ctx}/role/update/${role.id}" class="${sh:hasPermission('role:update')?'':'hidden'}">修改</a></td>
 			</tr>
 		</c:forEach>
 	</table>

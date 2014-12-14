@@ -112,15 +112,12 @@ public class User implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	public boolean hasRole(String role) {
-		if (roles != null) {
-			for (Role r : roles) {
-				if (r.getValue().equals(role)) {
-					return true;
-				}
-			}
-		}
-		return false;
+	public boolean contains(Role role) {
+		return roles != null ? roles.contains(role) : false;
+	}
+
+	public boolean belongs(Organization organization) {
+		return this.organization != null ? this.organization.equals(organization) : false;
 	}
 
 	@Override

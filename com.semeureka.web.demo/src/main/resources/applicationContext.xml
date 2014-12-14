@@ -14,6 +14,8 @@
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3316/test2" />
 		<property name="user" value="root" />
 		<property name="password" value="" />
+		<property name="maxIdleTime" value="180" />
+		<property name="idleConnectionTestPeriod" value="60" />
 	</bean>
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
@@ -49,21 +51,22 @@
 		<property name="unauthorizedUrl" value="/error/401" />
 		<property name="filterChainDefinitions">
 			<value>
+				/favicon.ico = anon
 				/resources/** = anon
 				/user/logout = logout
 				/user/login = authc
 				/user = perms[user:view]
 				/user/create = perms[user:create]
-				/user/delete = perms[user:delete]
-				/user/update = perms[user:update]
+				/user/delete/* = perms[user:delete]
+				/user/update/* = perms[user:update]
 				/role = perms[role:view]
 				/role/create = perms[role:create]
-				/role/delete = perms[role:delete]
-				/role/update = perms[role:update]
+				/role/delete/* = perms[role:delete]
+				/role/update/* = perms[role:update]
 				/organization = perms[organization:view]
 				/organization/create = perms[organization:create]
-				/organization/delete = perms[organization:delete]
-				/organization/update = perms[organization:update]
+				/organization/delete/* = perms[organization:delete]
+				/organization/update/* = perms[organization:update]
 				/** = user
 			</value>
 		</property>

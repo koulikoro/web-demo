@@ -14,8 +14,10 @@ INSERT INTO `t_permission` (`id`, `permission_description`, `permission_name`, `
 INSERT INTO `t_permission` (`id`, `permission_description`, `permission_name`, `permission_value`, `parent_id`) VALUES (32, NULL, '删除', 'organization:delete', 30);
 INSERT INTO `t_permission` (`id`, `permission_description`, `permission_name`, `permission_value`, `parent_id`) VALUES (33, NULL, '更新', 'organization:update', 30);
 INSERT INTO `t_permission` (`id`, `permission_description`, `permission_name`, `permission_value`, `parent_id`) VALUES (34, NULL, '查看', 'organization:view', 30);
-INSERT INTO `t_organization` (`id`, `organization_name`, `organization_path`, `create_time`) VALUES (1, '总公司', '1/', SYSDATE());
 INSERT INTO `t_role` (`id`, `role_description`, `role_name`, `role_value`) VALUES (1, NULL, '系统管理员', 'SYSTEM');
 INSERT INTO `t_role_permission` (`role_id`, `permission_id`) VALUES (1, 1);
-INSERT INTO `t_user` (`id`, `user_account`, `user_locked`, `user_name`, `user_password`, `organization_id`, `create_time`) VALUES (1, 'SYSTEM', 0, '系统管理员', '$shiro1$SHA-256$500000$5cn8YRgZlfVhAbsXTSpmfQ==$vCjyLKZR+p+dKoxR4si0F1BkdF9O7DqdONLahWLLPvE=', 1, SYSDATE());
+INSERT INTO `t_user` (`id`, `user_account`, `user_locked`, `user_name`, `user_password`, `organization_id`, `create_time`) VALUES (1, 'SYSTEM', 0, '超级管理员', '$shiro1$SHA-256$500000$5cn8YRgZlfVhAbsXTSpmfQ==$vCjyLKZR+p+dKoxR4si0F1BkdF9O7DqdONLahWLLPvE=', NULL, SYSDATE());
 INSERT INTO `t_user_role` (`user_id`, `role_id`) VALUES (1, 1);
+INSERT INTO `t_organization` (`id`, `create_time`, `organization_name`, `organization_path`, `parent_id`) VALUES (1, SYSDATE(), '总公司', '1/', NULL);
+INSERT INTO `t_user` (`id`, `user_account`, `user_locked`, `user_name`, `user_password`, `organization_id`, `create_time`) VALUES (2, 'ADMIN', 0, '系统管理员', '$shiro1$SHA-256$500000$hGo/w7rH6zCYUYMYakloqA==$wUkQMf6fUHA1IHLs+urcDeW2VzSLcM5kCH8RW/x5SLg=', 1, SYSDATE());
+INSERT INTO `t_user_role` (`user_id`, `role_id`) VALUES (2, 1);

@@ -23,10 +23,10 @@
 				<label class="col-md-2 control-label">${perm1.name}</label>
 				<div class="col-md-10">
 					<label class="checkbox-inline"><input name="permissionIds" type="checkbox" value="${perm1.id}"
-						class="checkbox-parent" ${role.hasPermission(perm1.value)?'checked':''}>全部</label>
+						class="checkbox-parent" ${role.contains(perm1)?'checked':''}>全部</label>
 					<c:forEach items="${perm1.children}" var="perm2">
 						<label class="checkbox-inline"><input name="permissionIds" type="checkbox" value="${perm2.id}"
-							class="checkbox-child" ${role.hasPermission(perm2.value)?'checked':''}>${perm2.name}</label>
+							class="checkbox-child" ${role.contains(perm2)?'checked':''}>${perm2.name}</label>
 					</c:forEach>
 				</div>
 			</div>
@@ -38,14 +38,14 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		<c:if test="${role.hasPermission('*')}">$('[class^="checkbox-"]').prop('checked', true);</c:if>
+		<c:if test="${role.contains(root)}">$('[class^="checkbox-"]').prop('checked',true);</c:if>
 		$('.checkbox-parent').click(function() {
 			$(this).closest('div').find('.checkbox-child').prop('checked', $(this).prop('checked')).prop('disabled', $(this).prop('checked'));
-		})
+		});
 		$('.checkbox-parent').each(function(){
 			if($(this).prop('checked')) {
 				$(this).closest('div').find('.checkbox-child').prop('checked', $(this).prop('checked')).prop('disabled', $(this).prop('checked'));
 			}
-		})
+		});
 	</script>
 </tt:frame>
