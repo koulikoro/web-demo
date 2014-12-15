@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
-<%@ taglib uri="http://shiro.apache.org/tags" prefix="sh"%>
-<tt:frame>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
+<template:frame>
 	<h1 class="page-header">风格样式</h1>
 	<c:set var="themes" value="cerulean,cosmo,cyborg,darkly,flatly,lumen,paper,sandstone,simplex,slate,superhero,united" />
 	<form class="form-horizontal">
@@ -44,4 +43,4 @@
 			});
 		</script>
 	</form>
-</tt:frame>
+</template:frame>

@@ -8,13 +8,13 @@ import com.semeureka.mvc.entity.User;
 public interface UserService {
 	void save(User user);
 
-	void deleteById(Integer id);
+	void delete(User user);
 
 	void update(User user);
 
-	User findByAccount(String account);
+	User get(Integer id);
 
-	User findById(Integer id);
+	User getByAccount(String account);
 
 	List<User> find(Organization parent);
 }

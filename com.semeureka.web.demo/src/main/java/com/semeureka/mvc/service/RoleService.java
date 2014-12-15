@@ -7,11 +7,11 @@ import com.semeureka.mvc.entity.Role;
 public interface RoleService {
 	void save(Role role);
 
-	void deleteById(Integer id);
+	void delete(Role role);
 
 	void update(Role role);
 
-	List<Role> findAll();
+	Role get(Integer id);
 
-	Role findById(Integer id);
+	List<Role> find();
 }

@@ -26,7 +26,7 @@ public class RoleController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("root", permissionService.findByValue(Permission.ROOT_PERMISSION));
+		model.addAttribute("root", permissionService.getByValue(Permission.ROOT_PERMISSION));
 		return "/role/create";
 	}
 
@@ -34,7 +34,7 @@ public class RoleController {
 	public String create(Role role, Integer[] permissionIds) {
 		Set<Permission> permissions = new HashSet<Permission>();
 		for (int i = 0; i < permissionIds.length; i++) {
-			CollectionUtils.addIgnoreNull(permissions, permissionService.findById(permissionIds[i]));
+			CollectionUtils.addIgnoreNull(permissions, permissionService.get(permissionIds[i]));
 		}
 		role.setPermissions(permissions);
 		roleService.save(role);
@@ -43,23 +43,35 @@ public class RoleController {
 
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
-		roleService.deleteById(id);
+		Role role = roleService.get(id);
+		if (role == null) {
+			// TODO 404
+		}
+		roleService.delete(role);
 		return "redirect:/role";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
-		model.addAttribute("role", roleService.findById(id));
-		model.addAttribute("root", permissionService.findByValue(Permission.ROOT_PERMISSION));
+		Role role = roleService.get(id);
+		if (role == null) {
+			// TODO 404
+		}
+		model.addAttribute("role", role);
+		model.addAttribute("root", permissionService.getByValue(Permission.ROOT_PERMISSION));
 		return "/role/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String update(Role role, Integer[] permissionIds, @PathVariable Integer id, Model model) {
+		Role old = roleService.get(id);
+		if (old == null) {
+			// TODO 404
+		}
 		role.setId(id);
 		Set<Permission> permissions = new HashSet<Permission>();
 		for (int i = 0; i < permissionIds.length; i++) {
-			CollectionUtils.addIgnoreNull(permissions, permissionService.findById(permissionIds[i]));
+			CollectionUtils.addIgnoreNull(permissions, permissionService.get(permissionIds[i]));
 		}
 		role.setPermissions(permissions);
 		roleService.update(role);
@@ -68,7 +80,7 @@ public class RoleController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String view(Model model) {
-		model.addAttribute("roles", roleService.findAll());
+		model.addAttribute("roles", roleService.find());
 		return "/role/view";
 	}
 }

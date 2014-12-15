@@ -23,11 +23,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		User user = userDao.findById(id);
-		if (user != null) {
-			userDao.delete(user);
-		}
+	public void delete(User user) {
+		userDao.delete(user);
 	}
 
 	@Override
@@ -36,13 +33,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByAccount(String account) {
-		return userDao.findByAccount(account);
+	public User get(Integer id) {
+		return id != null ? userDao.get(id) : null;
 	}
 
 	@Override
-	public User findById(Integer id) {
-		return userDao.findById(id);
+	public User getByAccount(String account) {
+		return userDao.getByAccount(account);
 	}
 
 	@Override

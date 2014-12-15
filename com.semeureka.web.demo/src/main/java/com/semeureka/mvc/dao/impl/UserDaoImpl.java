@@ -27,7 +27,7 @@ public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {
 	}
 
 	@Override
-	public User findByAccount(String account) {
+	public User getByAccount(String account) {
 		Criteria criteria = currentSession().createCriteria(User.class);
 		criteria.add(Restrictions.eq("account", account));
 		return (User) criteria.uniqueResult();

@@ -34,7 +34,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		if (account == null || account.isEmpty()) {
 			throw new AccountException("Null accounts are not allowed by this realm.");
 		}
-		User user = userService.findByAccount(account);
+		User user = userService.getByAccount(account);
 		if (user == null) {
 			throw new UnknownAccountException("No account found for user [" + account + "]");
 		}
@@ -49,9 +49,9 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 			throw new AuthorizationException("PrincipalCollection method argument cannot be null.");
 		}
 		User user = (User) principals.getPrimaryPrincipal();
-		user = userService.findById(user.getId());
+		user = userService.get(user.getId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		if (user != null && CollectionUtils.isNotEmpty(user.getRoles())) {
+		if (user != null && user.getRoles() != null) {
 			for (Role role : user.getRoles()) {
 				info.addRole(role.getValue());
 				if (CollectionUtils.isNotEmpty(role.getPermissions())) {

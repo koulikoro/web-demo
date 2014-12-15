@@ -54,7 +54,6 @@
 				/favicon.ico = anon
 				/resources/** = anon
 				/user/logout = logout
-				/user/login = authc
 				/user = perms[user:view]
 				/user/create = perms[user:create]
 				/user/delete/* = perms[user:delete]
@@ -67,7 +66,7 @@
 				/organization/create = perms[organization:create]
 				/organization/delete/* = perms[organization:delete]
 				/organization/update/* = perms[organization:update]
-				/** = user
+				/** = authc
 			</value>
 		</property>
 	</bean>

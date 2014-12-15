@@ -22,11 +22,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		Organization organization = organizationDao.findById(id);
-		if (organization != null) {
-			organizationDao.delete(organization);
-		}
+	public void delete(Organization organization) {
+		organizationDao.delete(organization);
 	}
 
 	@Override
@@ -35,8 +32,8 @@ public class OrganizationServiceImpl implements OrganizationService {
 	}
 
 	@Override
-	public Organization findById(Integer id) {
-		return id != null ? organizationDao.findById(id) : null;
+	public Organization get(Integer id) {
+		return id != null ? organizationDao.get(id) : null;
 	}
 
 	@Override

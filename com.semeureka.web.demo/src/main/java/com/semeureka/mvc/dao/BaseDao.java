@@ -8,7 +8,7 @@ public interface BaseDao<T, ID extends Serializable> {
 
 	void delete(T entity);
 
-	T findById(ID id);
+	T get(ID id);
 
-	List<T> findAll();
+	List<T> find();
 }

@@ -1,27 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://shiro.semeureka.com/functons" prefix="sh"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="tt"%>
-<tt:frame>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
+<template:frame>
 	<h1 class="page-header">添加用户</h1>
 	<form class="form-horizontal validate" action="${ctx}/user/create" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户名称</label>
 			<div class="col-md-10">
-				<input name="name" type="text" class="form-control" required pattern="[\w]{4,30}|[\u4e00-\u9fa5]{2,15}">
+				<input name="name" type="text" class="form-control" required maxlength="255">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
-				<input name="account" type="text" class="form-control" required pattern="[\w]{4,30}">
+				<input name="account" type="text" class="form-control" required pattern="[\w]{5,30}">
 				<p class="help-block">初始用户密码为“123456”。</p>
-			</div>
-		</div>
-		<div class="form-group form-group-sm hidden">
-			<label class="col-md-2 control-label">用户密码</label>
-			<div class="col-md-10">
-				<input name="password" value="123456" type="text" class="form-control">
+				<input name="password" type="hidden" value="123456">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
@@ -44,8 +38,8 @@
 		</div>
 		<div class="form-group form-group-sm">
 			<div class="col-md-offset-2 col-md-10">
-				<button type="submit" class="btn btn-default">添加</button>
+				<button type="submit" class="btn btn-primary">添加</button>
 			</div>
 		</div>
 	</form>
-</tt:frame>
+</template:frame>

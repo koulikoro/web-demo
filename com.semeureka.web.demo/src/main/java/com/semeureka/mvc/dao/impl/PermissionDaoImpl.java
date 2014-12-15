@@ -10,7 +10,7 @@ import com.semeureka.mvc.entity.Permission;
 @Repository
 public class PermissionDaoImpl extends BaseDaoImpl<Permission, Integer> implements PermissionDao {
 	@Override
-	public Permission findByValue(String value) {
+	public Permission getByValue(String value) {
 		Criteria criteria = currentSession().createCriteria(Permission.class);
 		criteria.add(Restrictions.eq("value", value));
 		return (Permission) criteria.uniqueResult();

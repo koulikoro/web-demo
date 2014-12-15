@@ -7,11 +7,11 @@ import com.semeureka.mvc.entity.Organization;
 public interface OrganizationService {
 	void save(Organization organization);
 
-	void deleteById(Integer id);
+	void delete(Organization organization);
 
 	void update(Organization organization);
 
-	Organization findById(Integer id);
+	Organization get(Integer id);
 
 	List<Organization> find(Organization parent);
 }

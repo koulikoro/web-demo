@@ -31,23 +31,38 @@ public class OrganizationController {
 
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
-		organizationService.deleteById(id);
+		Organization organization = organizationService.get(id);
+		if (organization == null) {
+			// TODO 404
+		}
+		organizationService.delete(organization);
 		return "redirect:/organization";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
-		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
-		model.addAttribute("organization", organizationService.findById(id));
+		Organization organization = organizationService.get(id);
+		if (organization == null) {
+			// TODO 404
+		}
+		model.addAttribute("organization", organization);
 		return "/organization/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String update(Organization organization, @PathVariable Integer id, Model model) {
+		Organization old = organizationService.get(id);
+		if (old == null) {
+			// TODO 404
+		}
 		organization.setId(id);
+		// Fixed "parent" field
 		if (organization.getParent().getId() == null) {
 			organization.setParent(null);
 		}
+		// Unmodifiable fields
+		organization.setParent(old.getParent());
+		organization.setPath(old.getPath());
 		organizationService.update(organization);
 		return "redirect:/organization";
 	}

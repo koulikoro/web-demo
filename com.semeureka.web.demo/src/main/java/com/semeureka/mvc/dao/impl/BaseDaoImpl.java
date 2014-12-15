@@ -39,13 +39,13 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T findById(ID id) {
+	public T get(ID id) {
 		return (T) currentSession().get(entityClass, id);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<T> findAll() {
+	public List<T> find() {
 		Criteria criteria = currentSession().createCriteria(entityClass);
 		criteria.addOrder(Order.asc("id"));
 		return criteria.list();

@@ -64,11 +64,4 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<jsp-config>
-		<taglib>
-			<taglib-uri>http://shiro.semeureka.com/functons</taglib-uri>
-			<taglib-location>/WEB-INF/tags/shiro-functions.tld</taglib-location>
-		</taglib>
-	</jsp-config>
 </web-app>

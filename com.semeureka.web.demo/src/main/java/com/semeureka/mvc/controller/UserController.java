@@ -34,7 +34,7 @@ public class UserController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("roles", roleService.findAll());
+		model.addAttribute("roles", roleService.find());
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		return "/user/create";
 	}
@@ -42,10 +42,8 @@ public class UserController {
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(User user, Integer[] roleIds) {
 		Set<Role> roles = new HashSet<Role>();
-		if (roleIds != null && roleIds.length > 0) {
-			for (int i = 0; i < roleIds.length; i++) {
-				CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
-			}
+		for (int i = 0; i < roleIds.length; i++) {
+			CollectionUtils.addIgnoreNull(roles, roleService.get(roleIds[i]));
 		}
 		user.setRoles(roles);
 		user.setPassword(passwordService.encryptPassword(user.getPassword()));
@@ -55,30 +53,41 @@ public class UserController {
 
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
-		userService.deleteById(id);
+		User user = userService.get(id);
+		if (user == null) {
+			// TODO 404
+		}
+		userService.delete(user);
 		return "redirect:/user";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
 	public String update(@PathVariable Integer id, Model model) {
-		model.addAttribute("user", userService.findById(id));
-		model.addAttribute("roles", roleService.findAll());
+		User user = userService.get(id);
+		if (user == null) {
+			// TODO 404
+		}
+		model.addAttribute("user", user);
+		model.addAttribute("roles", roleService.find());
 		model.addAttribute("organizations", organizationService.find(ShiroUtils.organization()));
 		return "/user/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
 	public String update(User user, Integer[] roleIds, @PathVariable Integer id, Model model) {
+		User old = userService.get(id);
+		if (old == null) {
+			// TODO 404
+		}
 		user.setId(id);
 		Set<Role> roles = new HashSet<Role>();
-		if (roleIds != null && roleIds.length > 0) {
-			for (int i = 0; i < roleIds.length; i++) {
-				CollectionUtils.addIgnoreNull(roles, roleService.findById(roleIds[i]));
-			}
+		for (int i = 0; i < roleIds.length; i++) {
+			CollectionUtils.addIgnoreNull(roles, roleService.get(roleIds[i]));
 		}
 		user.setRoles(roles);
-		if (StringUtils.isEmpty(user.getPassword())) { // 用户密码为空时，保留原密码
-			user.setPassword(userService.findById(id).getPassword());
+		// If password is empty, retain the original password
+		if (StringUtils.isEmpty(user.getPassword())) {
+			user.setPassword(userService.get(id).getPassword());
 		} else {
 			user.setPassword(passwordService.encryptPassword(user.getPassword()));
 		}
@@ -99,13 +108,13 @@ public class UserController {
 
 	@RequestMapping(value = "/password", method = RequestMethod.GET)
 	public String password(Model model) {
-		model.addAttribute("user", userService.findById(ShiroUtils.principal().getId()));
+		model.addAttribute("user", userService.get(ShiroUtils.principal().getId()));
 		return "/user/password";
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.POST)
 	public String password(String oldPassword, String newPassword) {
-		User user = userService.findById(ShiroUtils.principal().getId());
+		User user = userService.get(ShiroUtils.principal().getId());
 		if (passwordService.passwordsMatch(oldPassword, user.getPassword())) {
 			user.setPassword(passwordService.encryptPassword(newPassword));
 			userService.save(user);

@@ -17,17 +17,17 @@ public class PermissionServiceImpl implements PermissionService {
 	private PermissionDao permissionDao;
 
 	@Override
-	public Permission findById(Integer id) {
-		return permissionDao.findById(id);
+	public Permission get(Integer id) {
+		return id != null ? permissionDao.get(id) : null;
 	}
 
 	@Override
-	public Permission findByValue(String value) {
-		return permissionDao.findByValue(value);
+	public Permission getByValue(String value) {
+		return permissionDao.getByValue(value);
 	}
 
 	@Override
-	public List<Permission> findAll() {
-		return permissionDao.findAll();
+	public List<Permission> find() {
+		return permissionDao.find();
 	}
 }

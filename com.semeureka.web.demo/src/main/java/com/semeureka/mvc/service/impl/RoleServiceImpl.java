@@ -22,11 +22,13 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		Role role = roleDao.findById(id);
-		if (role != null) {
-			roleDao.delete(role);
-		}
+	public void delete(Role role) {
+		roleDao.delete(role);
+	}
+
+	@Override
+	public Role get(Integer id) {
+		return id != null ? roleDao.get(id) : null;
 	}
 
 	@Override
@@ -35,12 +37,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public Role findById(Integer id) {
-		return roleDao.findById(id);
-	}
-
-	@Override
-	public List<Role> findAll() {
-		return roleDao.findAll();
+	public List<Role> find() {
+		return roleDao.find();
 	}
 }
