@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Table(name = "t_user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 3416936374124254934L;
+	public static final String SYSTEM_ACCOUNT = "SYSTEM";
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -53,7 +54,7 @@ public class User implements Serializable {
 	}
 
 	public void setAccount(String account) {
-		this.account = account;
+		this.account = account.toUpperCase();
 	}
 
 	public String getPassword() {

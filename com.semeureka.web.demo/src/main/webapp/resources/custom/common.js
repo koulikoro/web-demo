@@ -43,7 +43,8 @@ $(function() {
 			if (jqXHR.status == 200) {
 				location.reload();
 			} else {
-				alert('操作失败，异常代码[' + jqXHR.status + ']，相关信息：' + jqXHR.statusText);
+				message = jqXHR.getResponseHeader('Error-Message');
+				alert('操作失败：' + jqXHR.status + ' - ' + (message && decodeURI(message) || jqXHR.statusText));
 			}
 		});
 		return false;

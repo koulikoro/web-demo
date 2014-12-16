@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
+	<shiro:user>
+		<jsp:forward page="/" /><%-- 用户已经登录时跳转首页 --%>
+	</shiro:user>
 	<h1 class="page-header">用户登录</h1>
 	<form class="form-horizontal validate" action="${ctx}/user/login" method="post">
 		<div class="form-group form-group-sm">

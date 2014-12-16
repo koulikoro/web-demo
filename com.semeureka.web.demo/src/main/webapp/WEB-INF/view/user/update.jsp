@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
 	<h1 class="page-header">修改用户</h1>
@@ -13,7 +14,7 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>
 			<div class="col-md-10">
-				<input name="account" value="${user.account}" type="text" class="form-control" required pattern="[\w]{5,30}">
+				<input name="account" value="${user.account}" type="text" class="form-control" readonly="readonly">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">
@@ -26,7 +27,7 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">所属机构</label>
 			<div class="col-md-10">
-				<select name="organization.id" class="form-control">
+				<select name="organizationId" class="form-control">
 					<c:forEach items="${organizations}" var="organization">
 						<option value="${organization.id}" ${user.belongs(organization)?'selected':''}>${organization.name}</option>
 					</c:forEach>

@@ -28,7 +28,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public void update(Organization organization) {
-		organizationDao.save(organization);
+		organizationDao.update(organization);
 	}
 
 	@Override

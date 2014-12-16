@@ -15,15 +15,17 @@ import com.semeureka.mvc.entity.Organization;
 import com.semeureka.mvc.entity.User;
 
 @Repository
-public class UserDaoImpl extends BaseDaoImpl<User, Integer> implements UserDao {
+public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
 	@Override
 	public User save(User entity) {
-		if (entity.getId() == null) {
-			entity.setCreateTime(new Date());
-		} else {
-			entity.setUpdateTime(new Date());
-		}
+		entity.setCreateTime(new Date());
 		return super.save(entity);
+	}
+
+	@Override
+	public User update(User entity) {
+		entity.setUpdateTime(new Date());
+		return super.update(entity);
 	}
 
 	@Override

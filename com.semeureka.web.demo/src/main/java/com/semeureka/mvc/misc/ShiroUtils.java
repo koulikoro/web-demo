@@ -7,17 +7,13 @@ import com.semeureka.mvc.entity.Organization;
 import com.semeureka.mvc.entity.User;
 
 public class ShiroUtils {
-	public static Subject subject() {
-		return SecurityUtils.getSubject();
-	}
-
-	public static User principal() {
-		Subject subject = subject();
-		return subject != null ? (User) subject.getPrincipal() : null;
+	public static User user() {
+		Subject subject = SecurityUtils.getSubject();
+		return subject != null ? subject.getPrincipals().oneByType(User.class) : null;
 	}
 
 	public static Organization organization() {
-		User principal = principal();
-		return principal != null ? principal.getOrganization() : null;
+		User user = user();
+		return user != null ? user.getOrganization() : null;
 	}
 }

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.semeureka.mvc.dao.BaseDao;
 
-public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao<T, ID> {
+public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	protected Class<T> entityClass;
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -39,7 +39,13 @@ public abstract class BaseDaoImpl<T, ID extends Serializable> implements BaseDao
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public T get(ID id) {
+	public T update(T entity) {
+		return (T) currentSession().merge(entity);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public T get(Serializable id) {
 		return (T) currentSession().get(entityClass, id);
 	}
 

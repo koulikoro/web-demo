@@ -1,5 +1,7 @@
 package com.semeureka.mvc.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.semeureka.mvc.entity.Organization;
+import com.semeureka.mvc.misc.HttpException;
 import com.semeureka.mvc.misc.ShiroUtils;
 import com.semeureka.mvc.service.OrganizationService;
 
@@ -24,16 +27,19 @@ public class OrganizationController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Organization organization) {
+	public String create(Organization organization, Integer parentId) {
+		if (parentId != null) {
+			organization.setParent(organizationService.get(parentId));
+		}
 		organizationService.save(organization);
 		return "redirect:/organization";
 	}
 
 	@RequestMapping(value = "/delete/{id}")
-	public String delete(@PathVariable Integer id) {
+	public String delete(@PathVariable Integer id) throws Exception {
 		Organization organization = organizationService.get(id);
 		if (organization == null) {
-			// TODO 404
+			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
 		organizationService.delete(organization);
 		return "redirect:/organization";
@@ -43,26 +49,22 @@ public class OrganizationController {
 	public String update(@PathVariable Integer id, Model model) {
 		Organization organization = organizationService.get(id);
 		if (organization == null) {
-			// TODO 404
+			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
 		model.addAttribute("organization", organization);
 		return "/organization/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(Organization organization, @PathVariable Integer id, Model model) {
+	public String update(Organization organization, Integer parentId, @PathVariable Integer id) {
 		Organization old = organizationService.get(id);
 		if (old == null) {
-			// TODO 404
+			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
 		organization.setId(id);
-		// Fixed "parent" field
-		if (organization.getParent().getId() == null) {
-			organization.setParent(null);
+		if (parentId != null) {
+			organization.setParent(organizationService.get(parentId));
 		}
-		// Unmodifiable fields
-		organization.setParent(old.getParent());
-		organization.setPath(old.getPath());
 		organizationService.update(organization);
 		return "redirect:/organization";
 	}

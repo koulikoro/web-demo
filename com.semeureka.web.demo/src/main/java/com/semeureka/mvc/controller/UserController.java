@@ -3,6 +3,8 @@ package com.semeureka.mvc.controller;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.credential.PasswordService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.semeureka.mvc.entity.Role;
 import com.semeureka.mvc.entity.User;
+import com.semeureka.mvc.misc.HttpException;
 import com.semeureka.mvc.misc.ShiroUtils;
 import com.semeureka.mvc.service.OrganizationService;
 import com.semeureka.mvc.service.RoleService;
@@ -40,12 +43,17 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(User user, Integer[] roleIds) {
-		Set<Role> roles = new HashSet<Role>();
-		for (int i = 0; i < roleIds.length; i++) {
-			CollectionUtils.addIgnoreNull(roles, roleService.get(roleIds[i]));
+	public String create(User user, Integer organizationId, Integer[] roleIds) {
+		if (organizationId != null) {
+			user.setOrganization(organizationService.get(organizationId));
 		}
-		user.setRoles(roles);
+		if (roleIds != null) {
+			Set<Role> roles = new HashSet<Role>();
+			for (int i = 0; i < roleIds.length; i++) {
+				CollectionUtils.addIgnoreNull(roles, roleService.get(roleIds[i]));
+			}
+			user.setRoles(roles);
+		}
 		user.setPassword(passwordService.encryptPassword(user.getPassword()));
 		userService.save(user);
 		return "redirect:/user";
@@ -55,7 +63,11 @@ public class UserController {
 	public String delete(@PathVariable Integer id) {
 		User user = userService.get(id);
 		if (user == null) {
-			// TODO 404
+			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
+		}
+		// forbid delete 'SYSTEM' account
+		if (user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
+			throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 		userService.delete(user);
 		return "redirect:/user";
@@ -65,7 +77,7 @@ public class UserController {
 	public String update(@PathVariable Integer id, Model model) {
 		User user = userService.get(id);
 		if (user == null) {
-			// TODO 404
+			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("roles", roleService.find());
@@ -74,17 +86,23 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(User user, Integer[] roleIds, @PathVariable Integer id, Model model) {
+	public String update(User user, Integer organizationId, Integer[] roleIds, @PathVariable Integer id, Model model,
+			HttpServletResponse response) throws Exception {
 		User old = userService.get(id);
 		if (old == null) {
-			// TODO 404
+			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
+		}
+		if (organizationId != null) {
+			user.setOrganization(organizationService.get(organizationId));
 		}
 		user.setId(id);
-		Set<Role> roles = new HashSet<Role>();
-		for (int i = 0; i < roleIds.length; i++) {
-			CollectionUtils.addIgnoreNull(roles, roleService.get(roleIds[i]));
+		if (roleIds != null) {
+			Set<Role> roles = new HashSet<Role>();
+			for (int i = 0; i < roleIds.length; i++) {
+				CollectionUtils.addIgnoreNull(roles, roleService.get(roleIds[i]));
+			}
+			user.setRoles(roles);
 		}
-		user.setRoles(roles);
 		// If password is empty, retain the original password
 		if (StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(userService.get(id).getPassword());
@@ -108,13 +126,13 @@ public class UserController {
 
 	@RequestMapping(value = "/password", method = RequestMethod.GET)
 	public String password(Model model) {
-		model.addAttribute("user", userService.get(ShiroUtils.principal().getId()));
+		model.addAttribute("user", userService.get(ShiroUtils.user().getId()));
 		return "/user/password";
 	}
 
 	@RequestMapping(value = "/password", method = RequestMethod.POST)
 	public String password(String oldPassword, String newPassword) {
-		User user = userService.get(ShiroUtils.principal().getId());
+		User user = userService.get(ShiroUtils.user().getId());
 		if (passwordService.passwordsMatch(oldPassword, user.getPassword())) {
 			user.setPassword(passwordService.encryptPassword(newPassword));
 			userService.save(user);

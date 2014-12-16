@@ -14,7 +14,7 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">上级机构</label>
 			<div class="col-md-10">
-				<select name="parent.id" class="form-control" readonly>
+				<select name="parentId" class="form-control" readonly>
 					<option value="${organization.parent.id}" selected>${organization.parent.name}</option>
 				</select>
 			</div>

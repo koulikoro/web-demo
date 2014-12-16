@@ -5,6 +5,7 @@ import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -38,6 +39,9 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		if (user == null) {
 			throw new UnknownAccountException("No account found for user [" + account + "]");
 		}
+		if (user.isLocked()) {
+			throw new LockedAccountException(); // TODO Add detail info
+		}
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
 		return info;
 	}
@@ -51,6 +55,10 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		User user = (User) principals.getPrimaryPrincipal();
 		user = userService.get(user.getId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		// Add root permssion for 'SYSTEM' account
+		if (user != null && user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
+			info.addStringPermission(Permission.ROOT_PERMISSION);
+		}
 		if (user != null && user.getRoles() != null) {
 			for (Role role : user.getRoles()) {
 				info.addRole(role.getValue());

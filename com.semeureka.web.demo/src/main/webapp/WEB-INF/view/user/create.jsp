@@ -21,7 +21,7 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">所属机构</label>
 			<div class="col-md-10">
-				<select name="organization.id" class="form-control">
+				<select name="organizationId" class="form-control">
 					<c:forEach items="${organizations}" var="organization">
 						<option value="${organization.id}">${organization.name}</option>
 					</c:forEach>
