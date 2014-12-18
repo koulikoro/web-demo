@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -40,7 +41,7 @@ public class OrganizationDaoImpl extends BaseDaoImpl<Organization> implements Or
 	public List<Organization> find(Organization parent) {
 		Criteria criteria = currentSession().createCriteria(Organization.class);
 		if (parent != null) {
-			criteria.add(Restrictions.like("path", parent.getPath()));
+			criteria.add(Restrictions.like("path", parent.getPath(), MatchMode.START));
 		}
 		criteria.addOrder(Order.asc("id"));
 		return criteria.list();

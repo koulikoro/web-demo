@@ -62,14 +62,13 @@ public class UserController {
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		User user = userService.get(id);
-		if (user == null) {
-			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
+		if (user != null) {
+			// forbid delete 'SYSTEM' account
+			if (user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
+				throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED);
+			}
+			userService.delete(user);
 		}
-		// forbid delete 'SYSTEM' account
-		if (user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
-			throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED);
-		}
-		userService.delete(user);
 		return "redirect:/user";
 	}
 

@@ -38,10 +38,9 @@ public class OrganizationController {
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) throws Exception {
 		Organization organization = organizationService.get(id);
-		if (organization == null) {
-			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
+		if (organization != null) {
+			organizationService.delete(organization);
 		}
-		organizationService.delete(organization);
 		return "redirect:/organization";
 	}
 

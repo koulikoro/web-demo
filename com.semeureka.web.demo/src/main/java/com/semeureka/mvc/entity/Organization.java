@@ -81,18 +81,19 @@ public class Organization implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
+		return id == null ? 0 : id.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Organization other = (Organization) obj;
-		return id != null ? id.equals(other.id) : false;
+		}
+		if (obj instanceof Organization) {
+			Organization other = (Organization) obj;
+			return id != null ? id.equals(other.id) : other.id == null;
+		}
+		return false;
 	}
+
 }

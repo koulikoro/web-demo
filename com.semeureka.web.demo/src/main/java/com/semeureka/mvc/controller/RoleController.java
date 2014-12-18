@@ -49,10 +49,9 @@ public class RoleController {
 	@RequestMapping(value = "/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		Role role = roleService.get(id);
-		if (role == null) {
-			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
+		if (role != null) {
+			roleService.delete(role);
 		}
-		roleService.delete(role);
 		return "redirect:/role";
 	}
 

@@ -123,18 +123,19 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return account != null ? account.hashCode() : 0;
+		return id == null ? 0 : id.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return account != null ? account.equals(other.account) : false;
+		}
+		if (obj instanceof User) {
+			User other = (User) obj;
+			return id != null ? id.equals(other.id) : other.id == null;
+		}
+		return false;
 	}
+
 }
