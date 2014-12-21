@@ -65,7 +65,7 @@ public class UserController {
 		if (user != null) {
 			// forbid delete 'SYSTEM' account
 			if (user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
-				throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED);
+				throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED, "你不能删除系统管理员账户！");
 			}
 			userService.delete(user);
 		}
@@ -136,6 +136,6 @@ public class UserController {
 			user.setPassword(passwordService.encryptPassword(newPassword));
 			userService.save(user);
 		}
-		return "redirect:/";
+		return "redirect:";
 	}
 }

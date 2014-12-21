@@ -41,10 +41,9 @@ $(function() {
 		var url = $(this).attr('href');
 		$.get(url).complete(function(jqXHR, textStatus) {
 			if (jqXHR.status == 200) {
-				location.reload();
+				document.write(jqXHR.responseText);
 			} else {
-				message = jqXHR.getResponseHeader('Error-Message');
-				alert('操作失败：' + jqXHR.status + ' - ' + (message && decodeURI(message) || jqXHR.statusText));
+				alert('操作失败，相关信息：' + jqXHR.status + ' - ' + decodeURIComponent(jqXHR.statusText));
 			}
 		});
 		return false;

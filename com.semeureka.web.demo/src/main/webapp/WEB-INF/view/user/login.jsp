@@ -5,7 +5,6 @@
 	<shiro:user>
 		<jsp:forward page="/" /><%-- 用户已经登录时跳转首页 --%>
 	</shiro:user>
-	<h1 class="page-header">用户登录</h1>
 	<form class="form-horizontal validate" action="${ctx}/user/login" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户账户</label>

@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
-	<h1 class="page-header">修改机构</h1>
 	<form class="form-horizontal validate" action="${ctx}/organization/update/${organization.id}" method="post">
 		<input name="path" value="${organization.path}" type="hidden">
 		<div class="form-group form-group-sm">

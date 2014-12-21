@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
-	<h1 class="page-header">修改角色</h1>
 	<form class="form-horizontal validate" action="${ctx}/role/update/${role.id}" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">角色名称</label>

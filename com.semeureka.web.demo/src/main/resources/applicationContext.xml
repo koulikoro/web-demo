@@ -11,7 +11,7 @@
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3316/test2" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3316/test" />
 		<property name="user" value="root" />
 		<property name="password" value="" />
 		<property name="maxIdleTime" value="180" />
@@ -23,7 +23,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>
@@ -53,20 +53,17 @@
 			<value>
 				/favicon.ico = anon
 				/resources/** = anon
+				/user/login = authc
 				/user/logout = logout
-				/user = perms[user:view]
 				/user/create = perms[user:create]
 				/user/delete/* = perms[user:delete]
 				/user/update/* = perms[user:update]
-				/role = perms[role:view]
 				/role/create = perms[role:create]
 				/role/delete/* = perms[role:delete]
 				/role/update/* = perms[role:update]
-				/organization = perms[organization:view]
 				/organization/create = perms[organization:create]
 				/organization/delete/* = perms[organization:delete]
 				/organization/update/* = perms[organization:update]
-				/** = authc
 			</value>
 		</property>
 	</bean>

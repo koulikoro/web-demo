@@ -3,7 +3,6 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
-	<h1 class="page-header">修改用户</h1>
 	<form class="form-horizontal validate" action="${ctx}/user/update/${user.id}" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">用户名称</label>

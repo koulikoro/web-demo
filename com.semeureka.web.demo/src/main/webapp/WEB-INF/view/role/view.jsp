@@ -3,7 +3,6 @@
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
-	<h1 class="page-header">角色信息</h1>
 	<form class="form-inline form-group clearfix" action="${ctx}/role">
 		<shiro:hasPermission name="role:create">
 			<a href="${ctx}/role/create" class="btn btn-default btn-sm">添加</a>

@@ -2,13 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="template"%>
 <template:frame>
-	<h1 class="page-header">风格样式</h1>
 	<c:set var="themes" value="cerulean,cosmo,cyborg,darkly,flatly,lumen,paper,sandstone,simplex,slate,superhero,united" />
-	<form class="form-horizontal">
+	<form id="theme-update" class="form-horizontal" action="${ctx}/theme" method="post">
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">风格样式类型</label>
 			<div class="col-md-10">
-				<select id="theme" class="form-control">
+				<select id="theme" name="theme" class="form-control">
 					<option value="">.default</option>
 					<c:forTokens items="${themes}" delims="," var="theme">
 						<option value=".${theme}">.${theme}</option>
@@ -29,13 +28,10 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-			$('#theme').val('${cookie.theme.value}');
-			$('[alt="${cookie.theme.value}"]').css('background-color','#ff0000');
+			$('#theme').val('${theme}');
+			$('[alt="${theme}"]').css('background-color','#ff0000');
 			$('#theme').change(function() {
-				var exp = new Date();
-				exp.setTime(exp.getTime() + 365 * 24 * 3600 * 1000);
-				document.cookie = 'theme=' + $('#theme').val() + ";path=${ctx};expires=" + exp.toGMTString();
-				location.reload();
+				$('#theme-update').submit();
 			});
 			$('.img-responsive').click(function() {
 				$('#theme').val($(this).prop('alt'));
