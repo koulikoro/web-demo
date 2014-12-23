@@ -9,7 +9,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${navs[0].name}</title>
 <link href="${ctx}/resources/bootstrap/3.3.1/css/bootstrap${theme}.css" rel="stylesheet">
 <link href="${ctx}/resources/custom/common.css" rel="stylesheet">
 <!--[if lt IE 9]>
@@ -28,14 +27,16 @@
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
 					<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="${ctx}/menu/${navs[0].id}">${navs[0].name}</a>
+				<a class="navbar-brand" href="${ctx}/resource/${navs[0].id}">
+					<img src="${ctx}/resources/image/shiro-logo.png">
+				</a>
 			</div>
 			<div id="navbar-collapse" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<c:forEach items="${navs[0].children}" var="menu">
-						<c:if test="${menu.accessible}">
-							<li class="${menu eq navs[1]?'active':''}"><a href="${ctx}/menu/${menu.id}">${menu.name}</a></li>
-						</c:if>
+					<c:forEach items="${navs[0].children}" var="resource">
+					<c:if test="${!resource.hidden}">
+					<li class="${resource eq navs[1]?'active':''}"><a href="${ctx}/resource/${resource.id}">${resource.name}</a></li>
+					</c:if>
 					</c:forEach>
 				</ul>
 				<shiro:user>
@@ -52,26 +53,28 @@
 	</nav>
 	<div class="container">
 		<div class="row">
+			<c:if test="${!empty navs[1]}">
 			<div class="col-md-2">
-				<c:forEach items="${navs[1].children}" var="menu">
-					<c:if test="${menu.accessible}">
-						<div class="panel panel-default">
-							<div class="panel-heading">${menu.name}</div>
-							<ul class="list-group">
-								<c:forEach items="${menu.children}" var="menu">
-									<c:if test="${menu.accessible}">
-										<a href="${ctx}/menu/${menu.id}" class="list-group-item ${menu eq navs[3]?'active':''}">${menu.name}</a>
-									</c:if>
-								</c:forEach>
-							</ul>
-						</div>
-					</c:if>
+				<c:forEach items="${navs[1].children}" var="resource">
+				<c:if test="${!resource.hidden}">
+				<div class="panel panel-default">
+					<div class="panel-heading">${resource.name}</div>
+					<ul class="list-group">
+						<c:forEach items="${resource.children}" var="resource">
+						<c:if test="${!resource.hidden}">
+						<a href="${ctx}/resource/${resource.id}" class="list-group-item ${resource eq navs[3]?'active':''}">${resource.name}</a>
+						</c:if>
+						</c:forEach>
+					</ul>
+				</div>
+				</c:if>
 				</c:forEach>
 			</div>
-			<div class="col-md-10">
+			</c:if>
+			<div class="col-md-${empty navs[1]?'12':'10'}">
 				<ol class="breadcrumb">
-					<c:forEach items="${navs}" var="menu" begin="1">
-						<li><a href="${ctx}/menu/${menu.id}">${menu.name}</a></li>
+					<c:forEach items="${navs}" var="resource" begin="1">
+					<li><a href="${ctx}/resource/${resource.id}">${resource.name}</a></li>
 					</c:forEach>
 				</ol>
 				<jsp:doBody />

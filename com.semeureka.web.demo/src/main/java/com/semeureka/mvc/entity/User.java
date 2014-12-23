@@ -14,11 +14,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Entity
 @Table(name = "t_user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 3416936374124254934L;
-	public static final String SYSTEM_ACCOUNT = "SYSTEM";
+
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -54,7 +56,7 @@ public class User implements Serializable {
 	}
 
 	public void setAccount(String account) {
-		this.account = account.toUpperCase();
+		this.account = StringUtils.lowerCase(StringUtils.trimToNull(account));
 	}
 
 	public String getPassword() {
@@ -78,7 +80,7 @@ public class User implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = StringUtils.trimToNull(name);
 	}
 
 	public Organization getOrganization() {
@@ -111,6 +113,10 @@ public class User implements Serializable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public boolean isRoot() {
+		return "system".equals(account);
 	}
 
 	public boolean contains(Role role) {

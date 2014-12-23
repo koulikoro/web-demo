@@ -12,6 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Entity
 @Table(name = "t_role")
 public class Role implements Serializable {
@@ -26,8 +28,8 @@ public class Role implements Serializable {
 	@Column(name = "role_description")
 	private String description;
 	@ManyToMany
-	@JoinTable(name = "t_role_permission", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-	private Set<Permission> permissions;
+	@JoinTable(name = "t_role_resource", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "resource_id"))
+	private Set<Resource> resources;
 
 	public Integer getId() {
 		return id;
@@ -46,11 +48,11 @@ public class Role implements Serializable {
 	}
 
 	public String getValue() {
-		return value != null && !value.isEmpty() ? value : "role" + id;
+		return StringUtils.isEmpty(value) ? "role" + id : value;
 	}
 
 	public void setValue(String value) {
-		this.value = value;
+		this.value = StringUtils.trimToNull(value);
 	}
 
 	public String getDescription() {
@@ -58,19 +60,15 @@ public class Role implements Serializable {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		this.description = StringUtils.trimToNull(description);
 	}
 
-	public Set<Permission> getPermissions() {
-		return permissions;
+	public Set<Resource> getResources() {
+		return resources;
 	}
 
-	public void setPermissions(Set<Permission> permissions) {
-		this.permissions = permissions;
-	}
-
-	public boolean contains(Permission permission) {
-		return permissions != null ? permissions.contains(permission) : false;
+	public void setResources(Set<Resource> resources) {
+		this.resources = resources;
 	}
 
 	@Override

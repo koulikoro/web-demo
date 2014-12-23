@@ -63,9 +63,8 @@ public class UserController {
 	public String delete(@PathVariable Integer id) {
 		User user = userService.get(id);
 		if (user != null) {
-			// forbid delete 'SYSTEM' account
-			if (user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
-				throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED, "你不能删除系统管理员账户！");
+			if (user.isRoot()) { // forbid delete root account
+				throw new HttpException(HttpServletResponse.SC_UNAUTHORIZED);
 			}
 			userService.delete(user);
 		}
@@ -77,6 +76,9 @@ public class UserController {
 		User user = userService.get(id);
 		if (user == null) {
 			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
+		}
+		if (user.isRoot()) { // Ignore root account's organization
+			user.setOrganization(null);
 		}
 		model.addAttribute("user", user);
 		model.addAttribute("roles", roleService.find());

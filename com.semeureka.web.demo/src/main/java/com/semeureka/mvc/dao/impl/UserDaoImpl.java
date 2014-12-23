@@ -16,6 +16,7 @@ import com.semeureka.mvc.entity.User;
 
 @Repository
 public class UserDaoImpl extends BaseDaoImpl<User> implements UserDao {
+
 	@Override
 	public User save(User entity) {
 		entity.setCreateTime(new Date());

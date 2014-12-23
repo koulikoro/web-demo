@@ -10,13 +10,10 @@
 	</context:component-scan>
 	<mvc:annotation-driven />
 	<mvc:interceptors>
-		<ref bean="menuController" />
+		<ref bean="resourceController" />
 	</mvc:interceptors>
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:view-controller path="/error" view-name="/misc/error" />
-	<bean class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basename" value="message" />
-	</bean>
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/view/" />

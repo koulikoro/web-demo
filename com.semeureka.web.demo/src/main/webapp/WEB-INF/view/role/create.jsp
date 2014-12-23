@@ -15,16 +15,22 @@
 				<textarea name="description" rows="2" class="form-control" maxlength="255"></textarea>
 			</div>
 		</div>
-		<c:forEach items="${root.children}" var="perm1">
-			<div class="form-group form-group-sm">
-				<label class="col-md-2 control-label">${perm1.name}</label>
+		<c:forEach items="${resource.children}" var="res0">
+		<c:forEach items="${res0.children}" var="res1">
+		<c:forEach items="${res1.children}" var="res2">
+			<div class="form-group">
+				<label class="col-md-2 control-label">${res2.name}</label>
 				<div class="col-md-10">
-					<label class="checkbox-inline"><input name="permissionIds" value="${perm1.id}" type="checkbox" class="checkbox-parent">全部</label>
-					<c:forEach items="${perm1.children}" var="perm2">
-						<label class="checkbox-inline"><input name="permissionIds" value="${perm2.id}" type="checkbox" class="checkbox-child">${perm2.name}</label>
+					<label class="checkbox-inline"><input name="resourceIds" value="${res2.id}" type="checkbox"
+						class="checkbox-parent">访问页面</label>
+					<c:forEach items="${res2.children}" var="res3">
+					<label class="checkbox-inline"><input name="resourceIds" value="${res3.id}" type="checkbox"
+						class="checkbox-child">${res3.name}</label>
 					</c:forEach>
 				</div>
 			</div>
+		</c:forEach>
+		</c:forEach>
 		</c:forEach>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
@@ -33,8 +39,15 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		$('.checkbox-parent').click(function() {
-			$(this).closest('div').find('.checkbox-child').prop('checked', $(this).prop('checked')).prop('disabled', $(this).prop('checked'));
-		})
+		$('.checkbox-parent').click(function(){
+			if (!$(this).prop('checked')) {
+				$(this).closest('div').find('.checkbox-child').prop('checked', false);
+			}
+		});
+		$('.checkbox-child').click(function(){
+			if ($(this).prop('checked')) {
+				$(this).closest('div').find('.checkbox-parent').prop('checked', true);
+			}
+		});
 	</script>
 </template:frame>

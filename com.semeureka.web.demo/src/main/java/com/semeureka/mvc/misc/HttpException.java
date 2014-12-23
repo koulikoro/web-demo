@@ -21,4 +21,9 @@ public class HttpException extends RuntimeException {
 		super(message, cause);
 		this.statusCode = statusCode;
 	}
+
+	@Override
+	public String toString() {
+		return "HttpException [statusCode=" + statusCode + ", message=" + getMessage() + "]";
+	}
 }

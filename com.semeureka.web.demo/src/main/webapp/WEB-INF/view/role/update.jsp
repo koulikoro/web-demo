@@ -15,18 +15,22 @@
 				<textarea name="description" rows="3" class="form-control" maxlength="255">${role.description}</textarea>
 			</div>
 		</div>
-		<c:forEach items="${root.children}" var="perm1">
-			<div class="form-group form-group-sm">
-				<label class="col-md-2 control-label">${perm1.name}</label>
+		<c:forEach items="${resource.children}" var="res0">
+		<c:forEach items="${res0.children}" var="res1">
+		<c:forEach items="${res1.children}" var="res2">
+			<div class="form-group">
+				<label class="col-md-2 control-label">${res2.name}</label>
 				<div class="col-md-10">
-					<label class="checkbox-inline"><input name="permissionIds" type="checkbox" value="${perm1.id}"
-						class="checkbox-parent" ${role.contains(perm1)?'checked':''}>全部</label>
-					<c:forEach items="${perm1.children}" var="perm2">
-						<label class="checkbox-inline"><input name="permissionIds" type="checkbox" value="${perm2.id}"
-							class="checkbox-child" ${role.contains(perm2)?'checked':''}>${perm2.name}</label>
+					<label class="checkbox-inline"><input name="resourceIds" value="${res2.id}" type="checkbox"
+						class="checkbox-parent" ${role.resources.contains(res2)?'checked':''}>访问页面</label>
+					<c:forEach items="${res2.children}" var="res3">
+					<label class="checkbox-inline"><input name="resourceIds" value="${res3.id}" type="checkbox"
+						class="checkbox-child" ${role.resources.contains(res3)?'checked':''}>${res3.name}</label>
 					</c:forEach>
 				</div>
 			</div>
+		</c:forEach>
+		</c:forEach>
 		</c:forEach>
 		<div class="form-group">
 			<div class="col-md-offset-2 col-md-10">
@@ -35,16 +39,14 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		<%-- 如果角色有ROOT权限，选中所有项 --%>
-		<c:if test="${role.contains(root)}">$('[class^="checkbox-"]').prop('checked',true);</c:if>
-		$('.checkbox-parent').click(function() {
-			<%-- 选中全部时，选中所有子项，然后禁用；取消选中全部时，取消选中所有子项，然后启用 --%> 
-			$(this).closest('div').find('.checkbox-child').prop('checked', $(this).prop('checked')).prop('disabled', $(this).prop('checked'));
+		$('.checkbox-parent').click(function(){
+			if (!$(this).prop('checked')) {
+				$(this).closest('div').find('.checkbox-child').prop('checked', false);
+			}
 		});
-		$('.checkbox-parent').each(function(){
-			<%-- 初始化选中状态 --%>
-			if($(this).prop('checked')) {
-				$(this).closest('div').find('.checkbox-child').prop('checked', $(this).prop('checked')).prop('disabled', $(this).prop('checked'));
+		$('.checkbox-child').click(function(){
+			if ($(this).prop('checked')) {
+				$(this).closest('div').find('.checkbox-parent').prop('checked', true);
 			}
 		});
 	</script>

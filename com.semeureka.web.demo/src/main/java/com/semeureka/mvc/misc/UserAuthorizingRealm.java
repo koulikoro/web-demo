@@ -1,6 +1,5 @@
 package com.semeureka.mvc.misc;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -12,15 +11,17 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.authz.permission.AllPermission;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.semeureka.mvc.entity.Permission;
+import com.semeureka.mvc.entity.Resource;
 import com.semeureka.mvc.entity.Role;
 import com.semeureka.mvc.entity.User;
 import com.semeureka.mvc.service.UserService;
 
 public class UserAuthorizingRealm extends AuthorizingRealm {
+	private static final AllPermission ROOT_PERMISSION = new AllPermission();
 	private UserService userService;
 
 	public void setUserService(UserService userService) {
@@ -40,7 +41,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 			throw new UnknownAccountException("No account found for user [" + account + "]");
 		}
 		if (user.isLocked()) {
-			throw new LockedAccountException(); // TODO Add detail info
+			throw new LockedAccountException();
 		}
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), getName());
 		return info;
@@ -55,16 +56,18 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
 		User user = (User) principals.getPrimaryPrincipal();
 		user = userService.get(user.getId());
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		// Add root permssion for 'SYSTEM' account
-		if (user != null && user.getAccount().equals(User.SYSTEM_ACCOUNT)) {
-			info.addStringPermission(Permission.ROOT_PERMISSION);
+		// Add root permssion for root account
+		if (user != null && user.isRoot()) {
+			info.addObjectPermission(ROOT_PERMISSION);
 		}
 		if (user != null && user.getRoles() != null) {
 			for (Role role : user.getRoles()) {
 				info.addRole(role.getValue());
-				if (CollectionUtils.isNotEmpty(role.getPermissions())) {
-					for (Permission permission : role.getPermissions()) {
-						info.addStringPermission(permission.getValue());
+				if (role.getResources() != null) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getPermission() != null) {
+							info.addStringPermission(resource.getPermission());
+						}
 					}
 				}
 			}

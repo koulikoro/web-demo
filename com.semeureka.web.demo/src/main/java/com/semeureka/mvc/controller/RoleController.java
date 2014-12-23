@@ -13,34 +13,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.semeureka.mvc.entity.Permission;
+import com.semeureka.mvc.entity.Resource;
 import com.semeureka.mvc.entity.Role;
 import com.semeureka.mvc.misc.HttpException;
-import com.semeureka.mvc.service.PermissionService;
+import com.semeureka.mvc.service.ResourceService;
 import com.semeureka.mvc.service.RoleService;
 
 @Controller
 @RequestMapping(value = "/role")
 public class RoleController {
+	private static final int ROOT_RESOURCE_ID = 1;
 	@Autowired
 	private RoleService roleService;
 	@Autowired
-	private PermissionService permissionService;
+	private ResourceService resourceService;
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public String create(Model model) {
-		model.addAttribute("root", permissionService.getByValue(Permission.ROOT_PERMISSION));
+		model.addAttribute("resource", resourceService.get(ROOT_RESOURCE_ID));
 		return "/role/create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(Role role, Integer[] permissionIds) {
-		if (permissionIds != null) {
-			Set<Permission> permissions = new HashSet<Permission>();
-			for (int i = 0; i < permissionIds.length; i++) {
-				CollectionUtils.addIgnoreNull(permissions, permissionService.get(permissionIds[i]));
+	public String create(Role role, Integer[] resourceIds) {
+		if (resourceIds != null) {
+			Set<Resource> resources = new HashSet<Resource>();
+			for (int i = 0; i < resourceIds.length; i++) {
+				CollectionUtils.addIgnoreNull(resources, resourceService.get(resourceIds[i]));
 			}
-			role.setPermissions(permissions);
+			role.setResources(resources);
 		}
 		roleService.save(role);
 		return "redirect:/role";
@@ -62,23 +63,23 @@ public class RoleController {
 			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
 		model.addAttribute("role", role);
-		model.addAttribute("root", permissionService.getByValue(Permission.ROOT_PERMISSION));
+		model.addAttribute("resource", resourceService.get(ROOT_RESOURCE_ID));
 		return "/role/update";
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-	public String update(Role role, Integer[] permissionIds, @PathVariable Integer id, Model model) {
+	public String update(Role role, Integer[] resourceIds, @PathVariable Integer id, Model model) {
 		Role old = roleService.get(id);
 		if (old == null) {
 			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
 		role.setId(id);
-		if (permissionIds != null) {
-			Set<Permission> permissions = new HashSet<Permission>();
-			for (int i = 0; i < permissionIds.length; i++) {
-				CollectionUtils.addIgnoreNull(permissions, permissionService.get(permissionIds[i]));
+		if (resourceIds != null) {
+			Set<Resource> resources = new HashSet<Resource>();
+			for (int i = 0; i < resourceIds.length; i++) {
+				CollectionUtils.addIgnoreNull(resources, resourceService.get(resourceIds[i]));
 			}
-			role.setPermissions(permissions);
+			role.setResources(resources);
 		}
 		roleService.update(role);
 		return "redirect:/role";

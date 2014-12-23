@@ -14,7 +14,7 @@ public class MiscController implements ServletContextAware {
 	@Override
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
-		servletContext.setAttribute("theme", ".united");
+		servletContext.setAttribute("theme", ".united"); // default theme
 	}
 
 	@RequestMapping(value = "/theme", method = RequestMethod.GET)
@@ -25,6 +25,6 @@ public class MiscController implements ServletContextAware {
 	@RequestMapping(value = "/theme", method = RequestMethod.POST)
 	public String theme(String theme) {
 		servletContext.setAttribute("theme", theme);
-		return "/misc/theme";
+		return "redirect:/theme";
 	}
 }

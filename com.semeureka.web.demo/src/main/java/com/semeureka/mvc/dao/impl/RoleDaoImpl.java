@@ -7,4 +7,5 @@ import com.semeureka.mvc.entity.Role;
 
 @Repository
 public class RoleDaoImpl extends BaseDaoImpl<Role> implements RoleDao {
+
 }

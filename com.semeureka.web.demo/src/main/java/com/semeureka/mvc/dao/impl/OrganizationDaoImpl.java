@@ -14,6 +14,7 @@ import com.semeureka.mvc.entity.Organization;
 
 @Repository
 public class OrganizationDaoImpl extends BaseDaoImpl<Organization> implements OrganizationDao {
+
 	// calculate the organization's path
 	private Organization calculatePath(Organization organization) {
 		Organization parent = organization.getParent();

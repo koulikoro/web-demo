@@ -29,3 +29,8 @@ textarea.form-control {
 	padding-top: 8px;
 	padding-bottom: 8px;
 }
+
+.navbar-brand>img {
+	height: 40px;
+	margin-top: -10px;
+}

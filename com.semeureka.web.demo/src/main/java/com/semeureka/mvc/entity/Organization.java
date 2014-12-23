@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Entity
 @Table(name = "t_organization")
 public class Organization implements Serializable {
@@ -44,7 +46,7 @@ public class Organization implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = StringUtils.trimToNull(name);
 	}
 
 	public Organization getParent() {
@@ -60,7 +62,7 @@ public class Organization implements Serializable {
 	}
 
 	public void setPath(String path) {
-		this.path = path;
+		this.path = StringUtils.trimToNull(path);
 	}
 
 	public Date getCreateTime() {

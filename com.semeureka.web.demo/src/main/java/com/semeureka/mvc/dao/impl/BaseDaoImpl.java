@@ -14,6 +14,7 @@ import com.semeureka.mvc.dao.BaseDao;
 
 public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	protected Class<T> entityClass;
+
 	@Autowired
 	private SessionFactory sessionFactory;
 
