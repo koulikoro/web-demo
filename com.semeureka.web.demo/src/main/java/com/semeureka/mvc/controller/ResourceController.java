@@ -31,7 +31,7 @@ import com.semeureka.mvc.service.ResourceService;
 @Controller
 @RequestMapping(value = "/resource")
 public class ResourceController extends HandlerInterceptorAdapter implements ServletContextAware {
-	private PatternMatcher matcher = new AntPathMatcher();
+	private static final PatternMatcher PATH_MATCHER = new AntPathMatcher();
 	@Autowired
 	private ResourceService resourceService;
 	@Autowired
@@ -45,15 +45,37 @@ public class ResourceController extends HandlerInterceptorAdapter implements Ser
 			FilterChainManager fcm = pmfcr.getFilterChainManager();
 			if (fcm instanceof DefaultFilterChainManager) {
 				DefaultFilterChainManager dfcm = (DefaultFilterChainManager) fcm;
-				servletContext.setAttribute("dfcm", dfcm);
 				List<Resource> resources = resourceService.find();
 				for (Resource resource : resources) {
-					String permission = resource.getPermission();
-					if (permission != null) {
-						dfcm.createChain(resource.getPath(), "perms[" + permission + "]");
+					if (resource.getPermission() != null) {
+						dfcm.createChain(resource.getPath(), "perms[" + resource.getPermission() + "]");
 					}
 				}
 			}
+		}
+	}
+
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
+		String uri = request.getRequestURI().substring(request.getContextPath().length());
+		List<Resource> resources = resourceService.find();
+		for (Resource resource : resources) {
+			if (resource.isView() && PATH_MATCHER.matches(resource.getPath(), uri)) {
+				List<Resource> navs = new ArrayList<Resource>();
+				while (resource != null) {
+					navs.add(0, resource);
+					resource = resource.getParent();
+				}
+				request.setAttribute("navs", navs);
+				break;
+			}
+		}
+		if (request.getAttribute("navs") == null) {
+			List<Resource> navs = new ArrayList<Resource>();
+			Resource resource = resourceService.get(1); // FIXME
+			navs.add(resource);
+			request.setAttribute("navs", navs);
 		}
 	}
 
@@ -71,7 +93,7 @@ public class ResourceController extends HandlerInterceptorAdapter implements Ser
 	}
 
 	@RequestMapping(value = "/delete/{id}")
-	public String create(@PathVariable Integer id) {
+	public String delete(@PathVariable Integer id) {
 		Resource resource = resourceService.get(id);
 		if (resource != null) {
 			resourceService.delete(resource);
@@ -111,28 +133,10 @@ public class ResourceController extends HandlerInterceptorAdapter implements Ser
 	@RequestMapping(value = "/{id}")
 	public String redirect(@PathVariable Integer id) {
 		Resource resource = resourceService.get(id);
-		if (resource == null) {
+		if (resource == null || resource.getDefaultPath() == null) {
 			throw new HttpException(HttpServletResponse.SC_NOT_FOUND);
 		}
-		return "redirect:" + resource.getPath();
+		return "redirect:" + resource.getDefaultPath();
 	}
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		String uri = request.getRequestURI().substring(request.getContextPath().length());
-		List<Resource> resources = resourceService.find();
-		for (Resource resource : resources) {
-			String path = resource.getPath();
-			if (path != null && matcher.matches(path, uri)) {
-				List<Resource> navs = new ArrayList<Resource>();
-				while (resource != null) {
-					navs.add(0, resource);
-					resource = resource.getParent();
-				}
-				request.getSession().setAttribute("navs", navs);
-				break;
-			}
-		}
-	}
 }

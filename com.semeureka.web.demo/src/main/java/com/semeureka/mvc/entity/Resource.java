@@ -1,6 +1,5 @@
 package com.semeureka.mvc.entity;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,16 +14,15 @@ import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 @Entity
 @Table(name = "t_resource")
-public class Resource implements Serializable {
-	private static final long serialVersionUID = 8191640268421344861L;
-
+public class Resource {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@Column(name = "resource_name")
+	@Column(name = "resource_name", nullable = false)
 	private String name;
 	@Column(name = "resource_path")
 	private String path;
@@ -33,11 +31,9 @@ public class Resource implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
 	private Resource parent;
-	@OneToMany(mappedBy = "parent")
 	@OrderBy("id")
+	@OneToMany(mappedBy = "parent")
 	private Set<Resource> children;
-	@Column(name = "resource_hidden")
-	private boolean hidden;
 
 	public Integer getId() {
 		return id;
@@ -52,7 +48,7 @@ public class Resource implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.trimToNull(name);
+		this.name = StringUtils.stripToNull(name);
 	}
 
 	public String getPath() {
@@ -60,7 +56,7 @@ public class Resource implements Serializable {
 	}
 
 	public void setPath(String path) {
-		this.path = StringUtils.trimToNull(path);
+		this.path = StringUtils.stripToNull(path);
 	}
 
 	public String getPermission() {
@@ -68,7 +64,7 @@ public class Resource implements Serializable {
 	}
 
 	public void setPermission(String permission) {
-		this.permission = StringUtils.trimToNull(permission);
+		this.permission = StringUtils.stripToNull(permission);
 	}
 
 	public Resource getParent() {
@@ -83,12 +79,8 @@ public class Resource implements Serializable {
 		return children;
 	}
 
-	public boolean isHidden() {
-		return hidden ? true : (permission == null ? false : !SecurityUtils.getSubject().isPermitted(permission));
-	}
-
-	public void setHidden(boolean hidden) {
-		this.hidden = hidden;
+	public void setChildren(Set<Resource> children) {
+		this.children = children;
 	}
 
 	@Override
@@ -101,11 +93,30 @@ public class Resource implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (obj instanceof User) {
+		if (obj instanceof Resource) {
 			Resource other = (Resource) obj;
 			return id != null ? id.equals(other.id) : other.id == null;
 		}
 		return false;
 	}
 
+	public String getDefaultPath() {
+		if (path == null && children != null) {
+			for (Resource child : children) {
+				if (child.getDefaultPath() != null && !child.isHidden()) {
+					return child.getDefaultPath();
+				}
+			}
+		}
+		return path;
+	}
+
+	public boolean isHidden() {
+		Subject subject = SecurityUtils.getSubject();
+		return permission == null ? subject.getPrincipal() == null : !subject.isPermitted(permission);
+	}
+
+	public boolean isView() {
+		return path != null && permission != null;
+	}
 }

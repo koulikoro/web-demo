@@ -1,5 +1,4 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
-<%@ attribute name="title" required="false" type="java.lang.String"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}" scope="session" />
@@ -21,7 +20,7 @@
 <script src="${ctx}/resources/custom/common.js"></script>
 </head>
 <body>
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default navbar-static-top">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -33,36 +32,45 @@
 			</div>
 			<div id="navbar-collapse" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<c:forEach items="${navs[0].children}" var="resource">
-					<c:if test="${!resource.hidden}">
-					<li class="${resource eq navs[1]?'active':''}"><a href="${ctx}/resource/${resource.id}">${resource.name}</a></li>
+					<c:forEach items="${navs[0].children}" var="nav">
+					<c:if test="${!nav.hidden}">
+					<li class="${nav eq navs[1]?'active':''}"><a href="${ctx}/resource/${nav.id}">${nav.name}</a></li>
 					</c:if>
 					</c:forEach>
 				</ul>
 				<shiro:user>
-					<p class="navbar-text navbar-right">
-						当前用户（
-						<shiro:principal property="name" />
-						） <a href="${ctx}/user/password" class="navbar-link"><span class="glyphicon glyphicon-lock"></span></a> <a
-							href="${ctx}/user/logout" class="navbar-link confirm" data-confirm="确认要退出吗?"><span
-							class="glyphicon glyphicon-log-out"></span></a>
-					</p>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="${ctx}/user/password" class="dropdown-toggle" data-toggle="dropdown">
+							<span class="glyphicon glyphicon-user"></span> <shiro:principal property="name" /> <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="${ctx}/user/password"><span class="glyphicon glyphicon-lock"></span> 修改密码</a></li>
+						</ul>
+					</li>
+					<li><a href="${ctx}/user/logout" class="navbar-link confirm" data-confirm="确认要退出吗?"><span class="glyphicon glyphicon-log-out"></span> 退出</a></li>
+				</ul>
 				</shiro:user>
+				<shiro:guest>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="${ctx}/user/login"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+				</ul>
+				</shiro:guest>
 			</div>
 		</div>
 	</nav>
 	<div class="container">
 		<div class="row">
-			<c:if test="${!empty navs[1]}">
+			<c:if test="${navs.size()>2}">
 			<div class="col-md-2">
-				<c:forEach items="${navs[1].children}" var="resource">
-				<c:if test="${!resource.hidden}">
+				<c:forEach items="${navs[1].children}" var="nav">
+				<c:if test="${!nav.hidden}">
 				<div class="panel panel-default">
-					<div class="panel-heading">${resource.name}</div>
+					<div class="panel-heading">${nav.name}</div>
 					<ul class="list-group">
-						<c:forEach items="${resource.children}" var="resource">
-						<c:if test="${!resource.hidden}">
-						<a href="${ctx}/resource/${resource.id}" class="list-group-item ${resource eq navs[3]?'active':''}">${resource.name}</a>
+						<c:forEach items="${nav.children}" var="nav">
+						<c:if test="${!nav.hidden}">
+						<a href="${ctx}/resource/${nav.id}" class="list-group-item ${nav eq navs[3]?'active':''}">${nav.name}</a>
 						</c:if>
 						</c:forEach>
 					</ul>
@@ -71,10 +79,10 @@
 				</c:forEach>
 			</div>
 			</c:if>
-			<div class="col-md-${empty navs[1]?'12':'10'}">
+			<div class="col-md-${navs.size()>2?'10':'12'}">
 				<ol class="breadcrumb">
-					<c:forEach items="${navs}" var="resource" begin="1">
-					<li><a href="${ctx}/resource/${resource.id}">${resource.name}</a></li>
+					<c:forEach items="${navs}" var="nav" begin="1">
+					<li><a href="${ctx}/resource/${nav.id}">${nav.name}</a></li>
 					</c:forEach>
 				</ol>
 				<jsp:doBody />

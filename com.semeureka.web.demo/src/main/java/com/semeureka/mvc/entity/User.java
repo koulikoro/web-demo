@@ -28,8 +28,6 @@ public class User implements Serializable {
 	private String account;
 	@Column(name = "user_password", nullable = false)
 	private String password;
-	@Column(name = "user_locked")
-	private boolean locked;
 	@Column(name = "user_name")
 	private String name;
 	@ManyToOne
@@ -56,7 +54,7 @@ public class User implements Serializable {
 	}
 
 	public void setAccount(String account) {
-		this.account = StringUtils.lowerCase(StringUtils.trimToNull(account));
+		this.account = StringUtils.lowerCase(StringUtils.stripToNull(account));
 	}
 
 	public String getPassword() {
@@ -67,20 +65,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public boolean isLocked() {
-		return locked;
-	}
-
-	public void setLocked(boolean locked) {
-		this.locked = locked;
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.trimToNull(name);
+		this.name = StringUtils.stripToNull(name);
 	}
 
 	public Organization getOrganization() {

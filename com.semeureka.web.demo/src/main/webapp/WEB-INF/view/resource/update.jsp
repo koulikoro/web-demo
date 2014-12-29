@@ -18,7 +18,7 @@
 		<div class="form-group form-group-sm">
 			<label class="col-md-2 control-label">所需权限</label>
 			<div class="col-md-10">
-				<input name="permission" value="${resource.permission}" type="text" class="form-control" maxlength="255">
+				<input name="permission" value="${resource.permission}" type="text" class="form-control" pattern="\w+(\:\w+(,\w+)*)*" maxlength="255">
 			</div>
 		</div>
 		<div class="form-group form-group-sm">

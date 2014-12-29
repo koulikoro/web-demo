@@ -16,4 +16,6 @@ public interface ResourceService {
 
 	List<Resource> find();
 
+	List<Resource> findByParent(Resource parent);
+
 }

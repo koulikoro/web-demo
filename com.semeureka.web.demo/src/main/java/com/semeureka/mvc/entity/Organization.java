@@ -46,7 +46,7 @@ public class Organization implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = StringUtils.trimToNull(name);
+		this.name = StringUtils.stripToNull(name);
 	}
 
 	public Organization getParent() {
@@ -62,7 +62,7 @@ public class Organization implements Serializable {
 	}
 
 	public void setPath(String path) {
-		this.path = StringUtils.trimToNull(path);
+		this.path = StringUtils.stripToNull(path);
 	}
 
 	public Date getCreateTime() {

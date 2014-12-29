@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-// @ControllerAdvice
+@ControllerAdvice
 public class HttpExceptionAdvice {
 
 	@Autowired
@@ -22,14 +23,15 @@ public class HttpExceptionAdvice {
 	 */
 	@ExceptionHandler(Exception.class)
 	public String handler(HttpServletRequest request, HttpServletResponse response, Exception ex) throws Exception {
-		int statusCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-		if (ex instanceof HttpException) {
-			statusCode = ((HttpException) ex).getStatusCode();
-		}
+		int statusCode = (ex instanceof HttpException) ? ((HttpException) ex).getStatusCode()
+				: HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 		String reason = ex.getMessage();
 		if (reason != null) {
 			reason = this.messageSource.getMessage(reason, null, reason, LocaleContextHolder.getLocale());
-			response.sendError(statusCode, encodeURI(reason));
+			if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) { // Ajax Request
+				reason = encodeURI(reason);
+			}
+			response.sendError(statusCode, reason);
 		} else {
 			response.sendError(statusCode);
 		}

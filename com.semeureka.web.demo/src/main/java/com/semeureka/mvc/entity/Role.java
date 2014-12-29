@@ -44,15 +44,15 @@ public class Role implements Serializable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = StringUtils.stripToNull(name);
 	}
 
 	public String getValue() {
-		return StringUtils.isEmpty(value) ? "role" + id : value;
+		return value;
 	}
 
 	public void setValue(String value) {
-		this.value = StringUtils.trimToNull(value);
+		this.value = StringUtils.stripToNull(value);
 	}
 
 	public String getDescription() {
@@ -60,7 +60,7 @@ public class Role implements Serializable {
 	}
 
 	public void setDescription(String description) {
-		this.description = StringUtils.trimToNull(description);
+		this.description = StringUtils.stripToNull(description);
 	}
 
 	public Set<Resource> getResources() {

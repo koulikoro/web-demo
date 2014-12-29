@@ -15,17 +15,17 @@
 				<textarea name="description" rows="3" class="form-control" maxlength="255">${role.description}</textarea>
 			</div>
 		</div>
-		<c:forEach items="${resource.children}" var="res0">
+		<c:forEach items="${permission.children}" var="res0">
 		<c:forEach items="${res0.children}" var="res1">
 		<c:forEach items="${res1.children}" var="res2">
 			<div class="form-group">
 				<label class="col-md-2 control-label">${res2.name}</label>
 				<div class="col-md-10">
-					<label class="checkbox-inline"><input name="resourceIds" value="${res2.id}" type="checkbox"
-						class="checkbox-parent" ${role.resources.contains(res2)?'checked':''}>访问页面</label>
+					<label class="checkbox-inline"><input name="permissionIds" value="${res2.id}" type="checkbox"
+						class="checkbox-parent" ${role.permissions.contains(res2)?'checked':''}>访问页面</label>
 					<c:forEach items="${res2.children}" var="res3">
-					<label class="checkbox-inline"><input name="resourceIds" value="${res3.id}" type="checkbox"
-						class="checkbox-child" ${role.resources.contains(res3)?'checked':''}>${res3.name}</label>
+					<label class="checkbox-inline"><input name="permissionIds" value="${res3.id}" type="checkbox"
+						class="checkbox-child" ${role.permissions.contains(res3)?'checked':''}>${res3.name}</label>
 					</c:forEach>
 				</div>
 			</div>
